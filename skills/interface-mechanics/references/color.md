@@ -2,7 +2,18 @@
 
 Load when: wiring dark mode, switching themes without a smear, deriving hover and active shades from one token, blending overlays, using wide-gamut color, perceptual gradient interpolation, color hints, procedural noise and grain texture, blending text over dynamic backgrounds, or picking readable text on an arbitrary background.
 Palette and token architecture belong to the project's design system; this file holds mechanisms.
-About 130 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Dark mode in one declaration with light-dark()
+- Theme switch without a transition smear
+- Derive states from one token with relative color
+- Overlays with color-mix()
+- Wide gamut on capable displays
+- Text over dynamic backgrounds with plus-lighter
+- Readable text on any background with contrast-color()
+- Perceptual gradient interpolation and color hints
+- Procedural noise and grain texture with SVG
 
 ## Dark mode in one declaration with light-dark()
 

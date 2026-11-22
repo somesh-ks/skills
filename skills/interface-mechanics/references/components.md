@@ -2,7 +2,17 @@
 
 Load when: building a slot or `asChild` API, a component that must work controlled and uncontrolled, accessible tabs styled from data attributes, distance-based tab indicator motion, dropdown sizing and truncation, optical padding for icon buttons, buttons that must not change size when a spinner, icon, or label changes, or character-limited inputs.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 320 lines. React examples target React 18 and 19.
+React examples target React 18 and 19.
+
+Contents:
+- The asChild slot
+- Controlled and uncontrolled in one hook
+- Tabs styled from data attributes
+- Distance-aware tab indicator motion
+- Character limits that do not block typing
+- Dropdown sizing and label truncation
+- Asymmetric optical padding for icon buttons
+- Buttons that keep their size
 
 ## The asChild slot
 

@@ -2,7 +2,18 @@
 
 Load when: an animation must be interruptible or retargetable mid-flight, progress should follow scroll, icons morph between shapes or swap on a state change, layers need promoting for the duration of an interaction, items enter with a stagger, or numbers roll like an odometer.
 Whether and how much to animate is a design decision; this file holds mechanisms only. Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 280 lines. Support lines verified against MDN on 2026-09-10; the icon swap entry on 2026-10-10.
+Support lines verified against MDN on 2026-09-10; the icon swap entry on 2026-10-10.
+
+Contents:
+- Velocity-preserving spring for interruptible motion
+- Progress that follows scroll
+- Icon morph with d: path()
+- Icon swap cross-fade
+- Promote a layer only while it can move
+- Staggered entrance with a custom property
+- Rolling number ticker
+- Spring curves in pure CSS with linear()
+- Choreography when layers overlap
 
 ## Velocity-preserving spring for interruptible motion
 

@@ -2,7 +2,20 @@
 
 Load when: drag or scrub interactions, cursor-velocity effects, drag lift feedback, click sounds or haptics, hover that flickers or gaps that do not click between spaced targets, keyboard navigation in lists and menus, command palettes, hold-to-repeat controls, pointer-driven glow or parallax, scroll snap events, or actionable form errors with first-invalid scroll.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 300 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Drag that survives leaving the window
+- Cursor velocity for tactile drags
+- Drag lift feedback
+- Click sound and haptic feedback
+- Hit areas with no dead zones
+- Roving tabindex for lists and menus
+- Command palette mechanics
+- Hold-to-repeat steppers
+- Pointer position as custom properties
+- React to scroll snap changes
+- Actionable form errors and first-invalid scroll
 
 ## Drag that survives leaving the window
 
