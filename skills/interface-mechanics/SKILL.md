@@ -1,16 +1,37 @@
 ---
 name: interface-mechanics
-description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use when building or reviewing anchor positioning, tooltip clipping, popovers, dialogs, @starting-style, height auto animation, :has(), scroll-driven effects, view transitions, FLIP, drag, hover flicker or dead zones between targets, command palettes, icon swaps, a button or toolbar that shifts when a spinner, icon, or label swaps, blur cost, light-dark(), relative color, theme switching without a smear, container units, font loading, text-box-trim, inert and focus, forced colors, or native mobile feel. Not for visual style or deciding whether to animate."
+description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source, plus an audit that reports file:line findings by severity. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and to audit or review UI code. Not for visual style, palettes, layout taste, copy, or deciding whether to animate."
 license: MIT
 metadata:
   author: somesh-ks
-  version: "1.0.0"
+  version: "1.1.0"
   verified: "2026-09-10"
 ---
 
 # Interface mechanics
 
-Router only. Find the row, load that one file, apply the technique together with its Support line. Load a second file only when the task spans domains.
+Router only. Pick the mode, find the row, load that one file. Load a second file only when the task spans domains.
+
+| Mode | When | Do |
+| --- | --- | --- |
+| Answer | The user names a problem or a technique | Find its row below and apply the technique with its Support line |
+| Build | You are writing or editing UI code and nobody asked for this skill | Run the build check below before you finish |
+| Audit | The user asks to audit, review, or find problems in UI code | Follow `references/audit.md` |
+
+## Build check
+
+When the component you are writing has a row in the table, load that file and apply what fits. These traps ship broken most often, so check each one that applies:
+
+- Siblings with hover or click spaced by `gap`: the pointer falls into dead zones. `dom-input.md` › Hit areas with no dead zones.
+- A button that swaps its label for a spinner or adds an icon: its size jumps. `components.md` › Buttons that keep their size.
+- A theme toggle on a page with color transitions: every color smears at once. `color.md` › Theme switch without a transition smear.
+- A conditional render with an enter animation: it pops out with no exit. `css-animation.md` › Enter and exit through display: none and the top layer.
+- A tooltip or popover placed with static offsets: it clips at the viewport edge. `css-animation.md` › Tooltips that flip on clipping.
+- A full-height layout on `100vh`, or an input under 16px: cut off or zoomed on phones. `mobile.md`.
+
+Fix them in the code. End the reply with a short **Mechanics** list: one line per trap you fixed, with its Support and Source lines. Skip traps that do not apply.
+
+## Find the file
 
 | Need | File |
 | --- | --- |

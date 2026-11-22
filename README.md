@@ -41,7 +41,13 @@ Skills CLI: `npx skills update interface-mechanics`. Claude Code plugin: `/plugi
 
 ### Use
 
-It triggers on its own when a task touches one of its techniques. You can also call it directly:
+It works in three modes:
+
+- **Build.** When an agent writes UI with overlays, tabs, toggles, loading buttons, drag, theme switching, or transitions, the skill loads on its own and checks the traps agents ship most often: hover dead zones, buttons that change size, theme smears, pop-outs with no exit, clipped tooltips, `100vh` and iOS input zoom. The reply ends with a short **Mechanics** list of what it fixed.
+- **Answer.** Name a problem ("the hover flickers between tabs") and it loads the one reference that fixes it.
+- **Audit.** Ask it to audit a file, a diff, or a project. It scans for about 35 signals, confirms each by reading the code, and reports `path:line · severity · what breaks · fix`, High first, with the Support and Source for each technique. It does not edit code until you pick a fix batch.
+
+You can also call it directly:
 
 ```
 /interface-mechanics the tab bar hover flickers between tabs and the dark mode toggle smears
@@ -54,6 +60,10 @@ Answers include the Support and Source lines under each snippet, so you can chec
 ### Tokens
 
 The skill uses your project's easing, duration, and radius tokens. If the project has none, it falls back to the defaults in [`SKILL.md`](skills/interface-mechanics/SKILL.md#default-tokens).
+
+## Evals
+
+`evals/` holds a runnable suite for `claude plugin eval` (Claude Code): build, answer, and audit cases graded on what the skill adds, plus should-not-trigger cases near its boundary (palettes, copy, whether to animate). See [`evals/README.md`](evals/README.md).
 
 ## Credits
 
