@@ -66,6 +66,12 @@ Answers include the Support and Source lines under each snippet, so you can chec
 
 It scans for 36 signals, confirms each by reading the code, and reports `path:line · severity · signal · what breaks · fix`, High first, with the Support and Source for each technique. It finds and grades; the fixes come from `interface-mechanics`, so install both. It does not edit code until you pick a fix batch. As a Claude Code plugin: `/interface-mechanics:sk-interface-audit`.
 
+Add `modernize` to find script and dependencies the platform now replaces: JS tooltip positioning, exit animations, measured height, textarea autosize, focus traps, and more. Each finding is graded Now, Enhance, or Wait from its browser support, and says what it removes:
+
+```
+/sk-interface-audit modernize src
+```
+
 ### Tokens
 
 The skill uses your project's easing, duration, and radius tokens. If the project has none, it falls back to the defaults in [`SKILL.md`](skills/interface-mechanics/SKILL.md#default-tokens).

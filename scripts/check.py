@@ -3,7 +3,7 @@
 
 Checks: frontmatter name matches the folder, description is quoted-safe and
 under 1024 characters, every reference file is linked from SKILL.md, every
-technique (## section) carries a Support and a Source line, and every
+technique (## section of a model-invoked skill) carries a Support and a Source line, and every
 "file.md › Section" pointer resolves to a real heading in some skill.
 
 Usage: python3 scripts/check.py
@@ -14,7 +14,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 POINTER = re.compile(r"`(?:references/)?([\w-]+\.md)` › ([^|;`\n]+)")
-NO_TECHNIQUES = {"signals.md"}  # audit lead tables, not technique libraries
 errors = []
 
 # Pointers may name a reference in any skill (sk-interface-audit points into
@@ -66,8 +65,10 @@ for skill_md in sorted(ROOT.glob("skills/*/SKILL.md")):
         if f"references/{name}" not in text and f"`{name}`" not in text:
             errors.append(f"{rel}: references/{name} is never named (orphan)")
 
+    # User-invoked workflow skills hold procedures and lead tables, not techniques.
+    workflow = fm.get("disable-model-invocation") == "true"
     for name, p in refs.items():
-        if name in NO_TECHNIQUES:
+        if workflow:
             continue
         sections = re.split(r"^## ", p.read_text(), flags=re.M)[1:]
         for sec in sections:
