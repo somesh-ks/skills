@@ -167,7 +167,7 @@ export function updateTabIndicator(indicator, fromRect, toRect) {
 Scaling stretches a rounded pill's `border-radius` and any border. Keep the indicator a flat bar or a radius small enough that the stretch is invisible over 200ms; for a large pill, crossfade at every distance instead.
 
 **Support:** Baseline widely available.
-**Source:** [Tab motion by distance](https://x.com/salleedesign/status/2118085564151021998)
+**Source:** [MDN: transition-duration](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration)
 
 ## Character limits that do not block typing
 
@@ -197,7 +197,7 @@ export function LimitedTextarea({ max = 280 }) {
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Block the submit, not the typing](https://x.com/detaildotdesign/status/2072311761273794686)
+**Source:** [GOV.UK Design System: character count](https://design-system.service.gov.uk/components/character-count/)
 
 ## Dropdown sizing and label truncation
 
@@ -231,7 +231,7 @@ Let the widest item set the dropdown menu's width rather than hardcoding a fixed
 - **Min/max bounds** protect both ends: quick selections stay clickable, and long titles never push the menu off-screen.
 
 **Support:** Baseline widely available.
-**Source:** [Let the widest item set dropdown width](https://x.com/keviduk/status/2117975138541146303)
+**Source:** [MDN: text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow)
 
 ## Asymmetric optical padding for icon buttons
 

@@ -274,4 +274,4 @@ Two layers animating in the same space read as confusion. In ascending order of 
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Apple HIG: Designing fluid interfaces](https://developer.apple.com/videos/play/wwdc2018/803/)
+**Source:** [Apple WWDC 2018: Designing Fluid Interfaces](https://developer.apple.com/videos/play/wwdc2018/803/)

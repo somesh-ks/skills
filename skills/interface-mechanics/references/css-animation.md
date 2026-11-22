@@ -306,4 +306,4 @@ For discrete badges, emoji reactions, and confirmation checkmarks, a keyframe sc
 The 8% overshoot (`scale(1.08)`) at 70% of duration adds perceived physical settlement. Combining with a non-zero starting scale (`scale(0.6)`) avoids the artificial appearance of popping out of nothingness while preserving snappiness.
 
 **Support:** Baseline widely available.
-**Source:** [Overshoot curves for scale animations](https://x.com/aviralj02/status/2116100296233652706)
+**Source:** [MDN: cubic-bezier()](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier)
