@@ -1,6 +1,6 @@
 ---
 name: sk-interface-audit
-description: "Audits web UI code for broken interface mechanics: hover dead zones, buttons that change size, theme smears, missing exit animations, clipped tooltips, lost focus, 100vh and iOS input zoom, scroll jank, and about 30 more signals. Reports path:line findings graded High, Medium, or Low, each with the interface-mechanics technique that fixes it. Run it as /sk-interface-audit on a file, a diff, a folder, or the project."
+description: "Audits web UI code for broken interface mechanics: hover dead zones, buttons that change size, theme smears, missing exit animations, clipped tooltips, lost focus, 100vh and iOS input zoom, scroll jank, and about 30 more signals. Reports path:line findings graded High, Medium, or Low, each with the interface-mechanics technique that fixes it. A modernize lens instead finds script and dependencies the platform now replaces (JS positioning, exit animations, height measuring, autosize, focus traps), graded by browser support. Run it as /sk-interface-audit on a file, a diff, a folder, or the project; add modernize for that lens."
 disable-model-invocation: true
 license: MIT
 metadata:
@@ -13,6 +13,15 @@ metadata:
 Finds what is broken or missing in a UI's mechanics and says how bad each problem is. It never edits code unless the user picks a fix. The fixes live in the `interface-mechanics` skill; this skill only finds and grades.
 
 Needs `interface-mechanics` installed beside it. If it is missing, still report the findings and name the fix in words, then say the skill gives the code with its Support and Source lines.
+
+## Lens
+
+| Lens | When | Use |
+| --- | --- | --- |
+| broken (default) | Find what is wrong | The procedure below |
+| modernize | The user adds `modernize`, or asks to simplify or drop dependencies | The same procedure, with `references/modernize.md` for signals, readiness, and format in place of the signals, severity, and finding format below |
+
+Run both only when the user asks for both, and report them in separate sections.
 
 ## Procedure
 
