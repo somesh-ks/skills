@@ -1,6 +1,9 @@
 {
   "name": "somesh-ks",
-  "owner": { "name": "somesh-ks" },
+  "owner": {
+    "name": "somesh-ks",
+    "url": "https://github.com/somesh-ks"
+  },
   "metadata": {
     "description": "Agent skills for design engineering by somesh-ks.",
     "version": "1.0.0"
@@ -11,7 +14,24 @@
       "description": "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source.",
       "source": "./",
       "strict": false,
-      "skills": ["./skills/interface-mechanics"]
+      "skills": [
+        "./skills/interface-mechanics"
+      ],
+      "author": {
+        "name": "somesh-ks"
+      },
+      "homepage": "https://someshks.com/projects/interface-mechanics",
+      "repository": "https://github.com/somesh-ks/skills",
+      "license": "MIT",
+      "category": "development",
+      "keywords": [
+        "css",
+        "dom",
+        "motion",
+        "accessibility",
+        "performance",
+        "design-engineering"
+      ]
     }
   ]
 }

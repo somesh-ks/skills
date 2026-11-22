@@ -38,19 +38,20 @@ Use these only when the project defines no motion tokens of its own.
 
 ```css
 :root {
-  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);  /* entering and exiting UI */
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* movement on screen */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);  /* easeOutQuint: entering and exiting UI */
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);  /* easeInOutQuart: movement on screen */
 }
 ```
 
-Entering or exiting uses `--ease-out`, on-screen movement `--ease-in-out`, hover and color `ease`, constant motion `linear`. Avoid `ease-in` on UI: it delays the moment the user is watching.
+Entering or exiting uses `--ease-out`, on-screen movement `--ease-in-out`, hover and color `ease`, constant motion `linear`. Skip `ease-in` on UI: it spends its first frames barely moving, right when the user is looking.
 
-| Element | Duration |
-| --- | --- |
-| Button press feedback | 100–160ms |
-| Tooltips, small popovers | 125–200ms |
-| Dropdowns, selects | 150–250ms |
-| Modals, drawers | 200–300ms |
-| Stagger between entering items | 30–80ms |
+Duration scales with how far the element travels and how much of the screen it covers:
 
-300ms is the ceiling, measured to the moment the new state is readable and accepts input. Under `prefers-reduced-motion: reduce`, keep short opacity fades and drop movement.
+- Feedback on the element itself (press, hover, toggle): about 100–150ms.
+- Something small appearing next to it (tooltip, menu, popover): about 150–200ms.
+- A surface covering part of the page (modal, drawer, sheet): about 200–300ms.
+- Lists entering one by one: offset each item by 30–50ms and cap the total.
+
+Stay under 300ms to the moment the new state can be read and used. Under `prefers-reduced-motion: reduce`, keep short opacity fades and drop movement.
+
+Curves: [easings.net](https://easings.net/). Durations: [Material Design 3: easing and duration](https://m3.material.io/styles/motion/easing-and-duration/tokens-specs).

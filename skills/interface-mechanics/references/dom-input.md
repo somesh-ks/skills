@@ -2,7 +2,20 @@
 
 Load when: drag or scrub interactions, cursor-velocity effects, drag lift feedback, click sounds or haptics, hover that flickers or gaps that do not click between spaced targets, keyboard navigation in lists and menus, command palettes, hold-to-repeat controls, pointer-driven glow or parallax, scroll snap events, or actionable form errors with first-invalid scroll.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 300 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Drag that survives leaving the window
+- Cursor velocity for tactile drags
+- Drag lift feedback
+- Click sound and haptic feedback
+- Hit areas with no dead zones
+- Roving tabindex for lists and menus
+- Command palette mechanics
+- Hold-to-repeat steppers
+- Pointer position as custom properties
+- React to scroll snap changes
+- Actionable form errors and first-invalid scroll
 
 ## Drag that survives leaving the window
 
@@ -76,7 +89,7 @@ export function createVelocityTilt(element, { maxTilt = 15, gain = 5 } = {}) {
 Stretching along the direction of travel (`scaleX` proportional to `|vx|`) is the same idea for elements that move rather than tilt.
 
 **Support:** Baseline widely available.
-**Source:** [Cursor velocity dynamics](https://x.com/gabriell_lab/status/2062232102515675385)
+**Source:** [MDN: PointerEvent](https://developer.mozilla.org/en-US/docs/Web/API/PointerEvent)
 
 ## Drag lift feedback
 
@@ -96,7 +109,7 @@ When an item is picked up, it should leave the surface: a small scale-up, a degr
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Drag interaction dynamics](https://x.com/alyx_so/status/2071064251037520255)
+**Source:** [Apple HIG: Drag and drop](https://developer.apple.com/design/human-interface-guidelines/drag-and-drop)
 
 ## Click sound and haptic feedback
 
@@ -135,29 +148,33 @@ export function playClick({ pitch = 1800, duration = 0.015, volume = 0.08 } = {}
 
 Spacing between interactive siblings (tabs, list rows, nav items, chart bars, calendar cells, icon buttons) must live inside each target, never between them. A `gap` or margin is empty DOM with no handler, so hover blinks off and clicks land on nothing while the pointer crosses it. Make each target fill its whole slot, flush with its neighbours, and recreate the spacing inside it with padding or a narrower centred child.
 
-```tsx
-<div className="flex items-stretch">                       {/* gap-0: the strip is one continuous target */}
-  {bars.map((bar, i) => (
-    <div
-      key={bar.id}
-      className="flex flex-1 flex-col items-center justify-end"   /* one full slot, full height */
-      onPointerEnter={() => setHovered(i)}
-      onPointerLeave={() => setHovered(null)}
-    >
-      <div className="w-full max-w-9" style={{ height: bar.value * UNIT }} />   {/* the narrower bar is the spacing */}
-    </div>
-  ))}
-</div>
+```css
+/* Before: the 8px gap is a strip of nothing. Hover drops and clicks miss. */
+.tabs { display: flex; gap: 8px; }
+
+/* After: neighbours touch, and each tab carries its own half of the spacing. */
+.tabs { display: flex; gap: 0; }
+.tabs > button {
+  padding-inline: 4px;            /* half the old gap on each side */
+  background: none;
+}
+.tabs > button > span {           /* the visible pill sits inside the hit area */
+  display: block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background-color 150ms ease;
+}
+.tabs > button:hover > span { background: var(--hover-bg); }
 ```
 
 - Lists and menus: put the rhythm on each row as `py-*`, not between rows as `space-y-*` or `gap-*`.
-- Rows that must stay column-aligned, such as bars and their labels, share the same flush layout, or their centres drift apart.
+- Chart bars work the same way: each column fills its slot edge to edge and draws a narrower bar inside, so the pointer is always over some column.
 - The same move grows a small glyph to the minimum target size: pad the hit area, keep the glyph.
 - Test by sweeping the pointer slowly across the component. The active state must never drop out inside its bounds.
 - Leave `gap` alone where the items are discrete and the space between them is meant to be inert, such as cards or unrelated buttons.
 
 **Support:** Baseline widely available.
-**Source:** [Interactive hit area techniques](https://github.com/millionco/skills/tree/main/skills/interactive-hit-areas)
+**Source:** [WCAG 2.2: Target size (minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html), [MDN: pointerenter](https://developer.mozilla.org/en-US/docs/Web/API/Element/pointerenter_event)
 
 ## Roving tabindex for lists and menus
 
@@ -219,7 +236,7 @@ export function wirePalette({ root, input, list, render, close }) {
 ```
 
 **Support:** Baseline widely available.
-**Source:** [cmdk command palette library](https://github.com/pacocoursey/cmdk)
+**Source:** [WAI-ARIA APG: Combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), [cmdk](https://github.com/pacocoursey/cmdk)
 
 ## Hold-to-repeat steppers
 
@@ -248,7 +265,7 @@ export function createHoldStepper(onStep, { initialDelay = 500, startRate = 200,
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Hold-to-repeat steppers](https://x.com/alyx_so/status/2071657203887636725)
+**Source:** [WAI-ARIA APG: Spinbutton pattern](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/)
 
 ## Pointer position as custom properties
 
@@ -282,7 +299,7 @@ export function trackPointer(element) {
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Context-aware card glow with pointermove](https://x.com/jh3yy/status/1992003440579662211)
+**Source:** [MDN: pointermove](https://developer.mozilla.org/en-US/docs/Web/API/Element/pointermove_event), [MDN: Using CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 
 ## React to scroll snap changes
 
@@ -339,4 +356,4 @@ export function handleFormSubmitError(form) {
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Form submission error remediation patterns](https://x.com/gabriell_lab/status/2117241828378292550)
+**Source:** [GOV.UK Design System: error summary](https://design-system.service.gov.uk/components/error-summary/), [W3C WAI: user notifications](https://www.w3.org/WAI/tutorials/forms/notifications/)

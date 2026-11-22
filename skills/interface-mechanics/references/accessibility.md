@@ -2,7 +2,15 @@
 
 Load when: locking the page behind a drawer or overlay, drawing focus rings that survive any background, honoring reduced motion without breaking transition events, hiding text visually, announcing status to screen readers, or supporting forced-colors mode.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 190 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Lock the background with inert and restore focus
+- Focus ring that reads on any background
+- Reduced motion without breaking transition events
+- Visually hidden text
+- Screen reader announcements that never drop
+- Forced-colors mode
 
 ## Lock the background with inert and restore focus
 

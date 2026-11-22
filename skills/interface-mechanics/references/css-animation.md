@@ -2,7 +2,21 @@
 
 Load when: animating to `height: auto`, expanding or collapsing content, anchoring popovers and tooltips with collision fallbacks, entry and exit through `display: none` or the top layer, animating gradients or custom properties, hover states that flicker, native accordions, sticky-state styling, or discrete badge pops with keyframe overshoot.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 280 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Animate to height: auto with interpolate-size
+- Animate height everywhere with grid rows
+- Intrinsic size math with calc-size()
+- Anchor a popover with position-area
+- Collision fallbacks with position-try-fallbacks
+- Tooltips that flip on clipping with anchor positioning
+- Enter and exit through display: none and the top layer
+- Animate gradients and custom properties with @property
+- Hover states that flicker
+- Accordion with details and ::details-content
+- Sticky header state with scroll-state()
+- Micro-interaction pop with overshoot
 
 ## Animate to height: auto with interpolate-size
 
@@ -292,4 +306,4 @@ For discrete badges, emoji reactions, and confirmation checkmarks, a keyframe sc
 The 8% overshoot (`scale(1.08)`) at 70% of duration adds perceived physical settlement. Combining with a non-zero starting scale (`scale(0.6)`) avoids the artificial appearance of popping out of nothingness while preserving snappiness.
 
 **Support:** Baseline widely available.
-**Source:** [Overshoot curves for scale animations](https://x.com/aviralj02/status/2116100296233652706)
+**Source:** [MDN: cubic-bezier()](https://developer.mozilla.org/en-US/docs/Web/CSS/easing-function/cubic-bezier)

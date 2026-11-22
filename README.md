@@ -4,7 +4,7 @@ Agent skills for design engineering. They follow the open [Agent Skills](https:/
 
 ## interface-mechanics
 
-Verified CSS, DOM, motion, performance, and accessibility mechanics. About 150 techniques, each with working code, a **Support** line (browser versions, checked against MDN) and a **Source** link. The skill is a router: one small table points the agent at the one reference file it needs, so a task loads a few kilobytes, not the whole library.
+Verified CSS, DOM, motion, performance, and accessibility mechanics. About 100 techniques, each with working code, a **Support** line (browser versions, checked against MDN) and a **Source** link. The skill is a router: one small table points the agent at the one reference file it needs, so a task loads a few kilobytes, not the whole library.
 
 It covers the details agents usually get wrong:
 
@@ -35,6 +35,10 @@ Claude Code, as a plugin:
 
 Manually: copy `skills/interface-mechanics` into `~/.claude/skills/` (or your agent's skills folder).
 
+### Update
+
+Skills CLI: `npx skills update interface-mechanics`. Claude Code plugin: `/plugin marketplace update somesh-ks`.
+
 ### Use
 
 It triggers on its own when a task touches one of its techniques. You can also call it directly:
@@ -42,6 +46,8 @@ It triggers on its own when a task touches one of its techniques. You can also c
 ```
 /interface-mechanics the tab bar hover flickers between tabs and the dark mode toggle smears
 ```
+
+Installed as a Claude Code plugin, the command is namespaced: `/interface-mechanics:interface-mechanics`.
 
 Answers include the Support and Source lines under each snippet, so you can check them. Support was verified on 2026-09-10; the skill tells the agent to re-check MDN once that date is more than six months old.
 

@@ -2,7 +2,20 @@
 
 Load when: sizing type to its container, avoiding layout shift from web fonts, editorial full-bleed grids, scoping styles to a component, optical sizing and weight transitions, aligning text optically in buttons, anchoring icons to multi-line titles, custom string truncation, descender-safe underlines, anchor scroll offset with scroll-margin-top, dark mode font smoothing on macOS, or keeping changing numbers from jittering.
 Type scale, measure, and hierarchy belong to the project's design system; this file holds mechanisms.
-About 220 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Type that scales with its container
+- Zero-shift font fallback with metric overrides
+- Full-bleed editorial grid
+- Scope styles to a component with @scope
+- Optical sizing and weight transitions
+- Optical text alignment and icon anchoring with text-box
+- Custom string truncation with text-overflow
+- Numbers that do not jitter
+- Descender-safe typographic underlines
+- Anchor scroll offset with scroll-margin-top
+- Dark mode font smoothing on macOS
 
 ## Type that scales with its container
 

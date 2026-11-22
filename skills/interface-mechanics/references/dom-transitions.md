@@ -2,7 +2,14 @@
 
 Load when: theme toggles or page changes with the View Transition API, shared layout animations with `layoutId`, layout and reorder animations (FLIP), or spring physics without a library.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 160 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Circular reveal with the View Transition API
+- Directional transitions with view transition types
+- Layout changes with FLIP and the Web Animations API
+- Analytical damped spring
+- Shared layout transitions with layoutId
 
 ## Circular reveal with the View Transition API
 

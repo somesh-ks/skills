@@ -1,8 +1,14 @@
 # Mobile and touch mechanics
 
 Load when: a web app should feel native on a phone, taps flash gray, document canvas reveals during overscroll, text gets selected while scrubbing, a drawer scrolls the page behind it, the page zooms when an input is focused, or `100vh` overflows behind browser chrome.
-Installed home-screen apps (safe areas, status bar, splash) are covered by the `apple-web-app` skill.
-About 110 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Native feel in a browser tab
+- Keep a drawer's scroll inside the drawer
+- Stop iOS zooming into inputs
+- Scrollbars that do not look like 2005
+- Document canvas background for rubber-band overscroll
 
 ## Native feel in a browser tab
 

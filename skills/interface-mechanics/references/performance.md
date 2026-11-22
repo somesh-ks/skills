@@ -2,7 +2,16 @@
 
 Load when: long lists or feeds render slowly, a widget's updates re-layout the page, animated text looks blurry, interactions feel laggy under load (INP), glass or blur surfaces stutter, or looping animations burn CPU offscreen.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 200 lines. Support lines verified against MDN on 2026-09-10.
+Support lines verified against MDN on 2026-09-10.
+
+Contents:
+- Skip offscreen rendering with content-visibility
+- Isolate heavy widgets with contain
+- Promote layers without blurring text
+- Keep input responsive: passive listeners and yielding
+- Keep backdrop blur off the animating surface
+- Reduce blur while scrolling fast
+- Pause looping animations offscreen
 
 ## Skip offscreen rendering with content-visibility
 

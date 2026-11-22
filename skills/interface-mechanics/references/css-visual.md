@@ -1,7 +1,29 @@
 # CSS layout and visual details
 
 Load when: styling from child count or nested state with `:has()`, scroll edge fades, subgrid alignment, `text-wrap`, table highlighting, concentric radii, auto-growing inputs, bold-on-hover, layered shadows, blur-to-offset ratio, one depth idiom, shadow rings in place of borders, container border contrast, image outlines, icon stroke width, native control colors, cascade layers, customizable select, squircles, or clip-path shapes.
-About 430 lines. Support lines verified against MDN on 2026-09-10; the shadow ring, image outline, and icon stroke entries on 2026-10-10.
+Support lines verified against MDN on 2026-09-10; the shadow ring, image outline, and icon stroke entries on 2026-10-10.
+
+Contents:
+- Quantity queries with :has()
+- Parent state with :has()
+- Scroll edge fades with scroll-driven masks
+- Equal-height card internals with subgrid
+- Balanced headings, pretty paragraphs
+- Row and column highlighting with :has()
+- Concentric radius as tokens
+- Auto-growing inputs with field-sizing
+- Bold on hover without layout shift
+- Layered, tinted shadows
+- Shadow ring instead of a border
+- Container border against both surfaces
+- Image outline that reads in both themes
+- Icon stroke that survives scaling
+- Icon sizing relative to text with 1cap
+- Native control colors
+- Cascade layers
+- Customizable select
+- Squircle corners with corner-shape
+- Cut and notched shapes with shape()
 
 ## Quantity queries with :has()
 

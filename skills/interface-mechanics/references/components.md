@@ -2,7 +2,17 @@
 
 Load when: building a slot or `asChild` API, a component that must work controlled and uncontrolled, accessible tabs styled from data attributes, distance-based tab indicator motion, dropdown sizing and truncation, optical padding for icon buttons, buttons that must not change size when a spinner, icon, or label changes, or character-limited inputs.
 Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
-About 320 lines. React examples target React 18 and 19.
+React examples target React 18 and 19.
+
+Contents:
+- The asChild slot
+- Controlled and uncontrolled in one hook
+- Tabs styled from data attributes
+- Distance-aware tab indicator motion
+- Character limits that do not block typing
+- Dropdown sizing and label truncation
+- Asymmetric optical padding for icon buttons
+- Buttons that keep their size
 
 ## The asChild slot
 
@@ -157,7 +167,7 @@ export function updateTabIndicator(indicator, fromRect, toRect) {
 Scaling stretches a rounded pill's `border-radius` and any border. Keep the indicator a flat bar or a radius small enough that the stretch is invisible over 200ms; for a large pill, crossfade at every distance instead.
 
 **Support:** Baseline widely available.
-**Source:** [Tab motion by distance](https://x.com/salleedesign/status/2118085564151021998)
+**Source:** [MDN: transition-duration](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration)
 
 ## Character limits that do not block typing
 
@@ -187,7 +197,7 @@ export function LimitedTextarea({ max = 280 }) {
 ```
 
 **Support:** Baseline widely available.
-**Source:** [Block the submit, not the typing](https://x.com/detaildotdesign/status/2072311761273794686)
+**Source:** [GOV.UK Design System: character count](https://design-system.service.gov.uk/components/character-count/)
 
 ## Dropdown sizing and label truncation
 
@@ -221,7 +231,7 @@ Let the widest item set the dropdown menu's width rather than hardcoding a fixed
 - **Min/max bounds** protect both ends: quick selections stay clickable, and long titles never push the menu off-screen.
 
 **Support:** Baseline widely available.
-**Source:** [Let the widest item set dropdown width](https://x.com/keviduk/status/2117975138541146303)
+**Source:** [MDN: text-overflow](https://developer.mozilla.org/en-US/docs/Web/CSS/text-overflow)
 
 ## Asymmetric optical padding for icon buttons
 
