@@ -15,7 +15,8 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/interface-mechanics"
+        "./skills/interface-mechanics",
+        "./skills/sk-interface-audit"
       ],
       "author": {
         "name": "somesh-ks"

@@ -338,3 +338,4 @@ Without `data-spinner`, saving shows the "Saving..." label; with it, a spinner c
 When the size should change by design, such as an icon-only button expanding to show its label, animate it with `grid-template-columns: 0fr` to `1fr` or `interpolate-size: allow-keywords`; never let it snap.
 
 **Support:** Baseline widely available (`interpolate-size` is Chromium only; without it the width snaps, which is acceptable).
+**Source:** [MDN: visibility](https://developer.mozilla.org/en-US/docs/Web/CSS/visibility), [MDN: grid-area](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area)

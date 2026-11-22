@@ -21,7 +21,7 @@ It covers the details agents usually get wrong:
 Any agent, with the [skills CLI](https://github.com/vercel-labs/skills) (Node 22.20 or later):
 
 ```bash
-npx skills add somesh-ks/skills --skill interface-mechanics
+npx skills add somesh-ks/skills --skill interface-mechanics --skill sk-interface-audit
 ```
 
 Add `-g` to install for every project, or `-a claude-code` to target one agent.
@@ -33,7 +33,7 @@ Claude Code, as a plugin:
 /plugin install interface-mechanics@somesh-ks
 ```
 
-Manually: copy `skills/interface-mechanics` into `~/.claude/skills/` (or your agent's skills folder).
+Manually: copy `skills/interface-mechanics` and `skills/sk-interface-audit` into `~/.claude/skills/` (or your agent's skills folder).
 
 ### Update
 
@@ -41,7 +41,12 @@ Skills CLI: `npx skills update interface-mechanics`. Claude Code plugin: `/plugi
 
 ### Use
 
-It triggers on its own when a task touches one of its techniques. You can also call it directly:
+It works in two modes, and a companion skill runs audits:
+
+- **Build.** When an agent writes UI with overlays, tabs, toggles, loading buttons, drag, theme switching, or transitions, the skill loads on its own and checks the traps agents ship most often: hover dead zones, buttons that change size, theme smears, pop-outs with no exit, clipped tooltips, `100vh` and iOS input zoom. The reply ends with a short **Mechanics** list of what it fixed.
+- **Answer.** Name a problem ("the hover flickers between tabs") and it loads the one reference that fixes it.
+
+You can also call it directly:
 
 ```
 /interface-mechanics the tab bar hover flickers between tabs and the dark mode toggle smears
@@ -51,9 +56,23 @@ Installed as a Claude Code plugin, the command is namespaced: `/interface-mechan
 
 Answers include the Support and Source lines under each snippet, so you can check them. Support was verified on 2026-09-10; the skill tells the agent to re-check MDN once that date is more than six months old.
 
+### Audit
+
+`sk-interface-audit` is a separate skill you run yourself; the model never starts it on its own:
+
+```
+/sk-interface-audit src/components
+```
+
+It scans for 36 signals, confirms each by reading the code, and reports `path:line · severity · signal · what breaks · fix`, High first, with the Support and Source for each technique. It finds and grades; the fixes come from `interface-mechanics`, so install both. It does not edit code until you pick a fix batch. As a Claude Code plugin: `/interface-mechanics:sk-interface-audit`.
+
 ### Tokens
 
 The skill uses your project's easing, duration, and radius tokens. If the project has none, it falls back to the defaults in [`SKILL.md`](skills/interface-mechanics/SKILL.md#default-tokens).
+
+## Evals
+
+`evals/` holds a runnable suite for `claude plugin eval` (Claude Code): build, answer, and audit cases graded on what the skill adds, plus should-not-trigger cases near its boundary (palettes, copy, whether to animate). See [`evals/README.md`](evals/README.md).
 
 ## Credits
 
