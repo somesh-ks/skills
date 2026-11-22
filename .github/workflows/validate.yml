@@ -1,0 +1,34 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check marketplace and skills
+        run: |
+          set -euo pipefail
+          jq -e '.plugins | length > 0' .claude-plugin/marketplace.json > /dev/null
+          for path in $(jq -r '.plugins[].skills[]' .claude-plugin/marketplace.json); do
+            test -f "$path/SKILL.md" || { echo "::error::$path/SKILL.md missing"; exit 1; }
+          done
+          for skill in skills/*/SKILL.md; do
+            dir=$(basename "$(dirname "$skill")")
+            head -1 "$skill" | grep -qx -- '---' || { echo "::error file=$skill::missing frontmatter"; exit 1; }
+            name=$(sed -n '2,/^---$/p' "$skill" | sed -n 's/^name: *//p')
+            [ "$name" = "$dir" ] || { echo "::error file=$skill::name '$name' does not match folder '$dir'"; exit 1; }
+            sed -n '2,/^---$/p' "$skill" | grep -q '^description: ' || { echo "::error file=$skill::missing description"; exit 1; }
+          done
+          echo "OK"

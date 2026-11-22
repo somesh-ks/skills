@@ -1,0 +1,28 @@
+name: Something is wrong
+description: A technique is incorrect, outdated, or has a broken support line or source.
+labels: [bug]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill and reference file
+      placeholder: interface-mechanics, references/motion.md
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: Quote the technique and say what happens instead.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Browser or agent, with version
+      placeholder: Safari 18.2 / Claude Code 2.1
+  - type: input
+    id: source
+    attributes:
+      label: Source for the correction
+      description: Spec, MDN, browser vendor, or a named author's article.

@@ -1,0 +1,16 @@
+name: Suggest a technique
+description: Propose a technique or a fix to how a skill triggers.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What should the skill cover
+      description: The problem an agent gets wrong today, and the fix.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Primary source
+      description: Spec, MDN, browser vendor, or a named author's article.
