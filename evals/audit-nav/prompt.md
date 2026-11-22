@@ -1,12 +1,12 @@
 ---
 name: audit-nav
 tags: [audit, trigger]
-plugins: [../../skills/interface-mechanics]
+plugins: [../../skills/sk-interface-audit, ../../skills/interface-mechanics]
 max_turns: 8
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
 
-Audit this UI code for problems and tell me what to fix first. These two files are the whole UI; there is nothing else to scan.
+/sk-interface-audit These two files, then tell me what to fix first. They are the whole UI; there is nothing else to scan.
 
 `src/components/nav.tsx`
 ```tsx

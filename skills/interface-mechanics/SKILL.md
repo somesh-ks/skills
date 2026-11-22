@@ -1,6 +1,6 @@
 ---
 name: interface-mechanics
-description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source, plus an audit that reports file:line findings by severity. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and to audit or review UI code. Not for visual style, palettes, layout taste, copy, or deciding whether to animate."
+description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and to review UI code. Not for visual style, palettes, layout taste, copy, or deciding whether to animate."
 license: MIT
 metadata:
   author: somesh-ks
@@ -16,7 +16,7 @@ Router only. Pick the mode, find the row, load that one file. Load a second file
 | --- | --- | --- |
 | Answer | The user names a problem or a technique | Find its row below and apply the technique with its Support line |
 | Build | You are writing or editing UI code and nobody asked for this skill | Run the build check below before you finish |
-| Audit | The user asks to audit, review, or find problems in UI code | Follow `references/audit.md` |
+| Review | The user asks to review or find problems in UI code | Check the code against the build check and the row's file. For a whole project, suggest `/sk-interface-audit` |
 
 ## Build check
 

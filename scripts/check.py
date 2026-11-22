@@ -4,7 +4,7 @@
 Checks: frontmatter name matches the folder, description is quoted-safe and
 under 1024 characters, every reference file is linked from SKILL.md, every
 technique (## section) carries a Support and a Source line, and every
-"file.md › Section" pointer resolves to a real heading.
+"file.md › Section" pointer resolves to a real heading in some skill.
 
 Usage: python3 scripts/check.py
 """
@@ -14,8 +14,16 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 POINTER = re.compile(r"`(?:references/)?([\w-]+\.md)` › ([^|;`\n]+)")
-NO_TECHNIQUES = {"audit.md"}  # procedure files, not technique libraries
+NO_TECHNIQUES = {"signals.md"}  # audit lead tables, not technique libraries
 errors = []
+
+# Pointers may name a reference in any skill (sk-interface-audit points into
+# interface-mechanics), so resolve against every skill's headings.
+ALL_HEADINGS = {}
+for ref in ROOT.glob("skills/*/references/*.md"):
+    ALL_HEADINGS.setdefault(ref.name, []).extend(
+        l[3:].strip() for l in ref.read_text().splitlines() if l.startswith("## ")
+    )
 
 
 def frontmatter(text):
@@ -73,9 +81,9 @@ for skill_md in sorted(ROOT.glob("skills/*/SKILL.md")):
         for i, line in enumerate(src.read_text().splitlines(), 1):
             for f, sec in POINTER.findall(line):
                 sec = sec.strip().rstrip(".")
-                if f not in headings:
+                if f not in ALL_HEADINGS:
                     errors.append(f"{src.relative_to(ROOT)}:{i}: points to missing file {f}")
-                elif not any(h.startswith(sec) for h in headings[f]):
+                elif not any(h.startswith(sec) for h in ALL_HEADINGS[f]):
                     errors.append(f"{src.relative_to(ROOT)}:{i}: no heading in {f} starts with '{sec}'")
 
 for e in errors:

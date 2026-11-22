@@ -6,10 +6,10 @@ Cases for `claude plugin eval`. Each case is a folder with `prompt.md` (the task
 | --- | --- |
 | `build-*` | The skill loads on its own while building UI, and the code avoids the trap the skill names (dead zones, size jumps, theme smear, missing exit, clipping) |
 | `answer-*` | A named problem gets the skill's fix |
-| `audit-*` | Findings come as `path:line` with a severity and a fix, and a clean pattern is not flagged |
+| `audit-*` | `/sk-interface-audit` reports `path:line` findings with a severity, a signal and a fix, and a clean pattern is not flagged |
 | `no-*` | The skill stays out of nearby tasks it does not own |
 
-Every positive case has a `skill-fired` grader (did the skill load) and a `result` grader on the outcome. Most also have `support-line`, because a browser support line plus a source is what a model without the skill rarely gives.
+Every model-invoked case has a `skill-fired` grader (did the skill load; slash commands load without a Skill call, so audit cases grade the format instead) and a `result` grader on the outcome. Most also have `support-line`, because a browser support line plus a source is what a model without the skill rarely gives.
 
 ## Run
 

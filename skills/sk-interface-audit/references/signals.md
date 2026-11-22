@@ -1,46 +1,6 @@
-# Audit
+# Signals
 
-Load when: the user asks to audit, review, or find problems in UI code, a component, a diff, or a whole project. The audit reports what is broken or missing in the mechanics this skill covers. It never edits code unless the user asks for the fixes.
-
-Contents:
-- Procedure
-- Severity
-- Finding format
-- Signals
-- Report
-
-## Procedure
-
-1. **Scope.** Audit what the user named: a file, a diff, a folder, or the project. With no scope, take the UI source under the current directory. Skip `node_modules`, build output (`dist`, `build`, `.next`, `out`), coverage, vendored code, and minified files. No UI source: say so and stop.
-2. **Profile.** Read `package.json` and the CSS entry. Note the framework, the styling (Tailwind v4 imports `tailwindcss` in CSS), the motion library, and the primitives (Radix, Base UI, React Aria, native `<dialog>`). Primitives already solve some signals: a Radix dialog manages focus, Tailwind v4 `hover:` is already gated behind `(hover: hover)`.
-3. **Scan.** Run the Look for column of each signal below with `rg -n` (or `grep -rnE`). A hit is a lead, not a finding.
-4. **Confirm.** Read about ten lines around each lead. Drop it when the code already handles the case, for example `outline-none` next to a `focus-visible:` ring. Signals marked *read* have no reliable pattern: open the components of that kind and check them by hand.
-5. **Grade** each confirmed finding with the severity table.
-6. **Report** in the format below. Report only what is wrong or missing; say nothing about what is fine. Zero findings is a valid result: say "No findings" and list what was checked.
-
-## Severity
-
-| Severity | Rule | Examples |
-| --- | --- | --- |
-| High | Someone is blocked or loses their place | Focus escapes a modal or vanishes on close, no visible focus, content clipped or unreachable on a phone, a drag that drops when the pointer leaves, a large motion effect with no reduced-motion path |
-| Medium | A visible glitch on a path people use | Hover flicker, a button that changes size, a theme smear, a pop-out with no exit, layout shift, jank while scrolling, iOS zoom on focus |
-| Low | Cost or polish most people will not notice | A permanent `will-change`, duplicated dark colors, jittering digits on a secondary screen, a tap flash |
-
-Raise a finding one level when it sits on the main path of the product (sign-up, checkout, the primary nav). Never raise above High.
-
-## Finding format
-
-One line per finding, grouped by severity, High first:
-
-```
-path:line · Severity · signal · what breaks, for whom · fix: references/<file>.md › <section>
-```
-
-- `path:line` is the first line of the problem. Several lines in one file for the same signal stay one finding: `src/nav.tsx:12,18,31`.
-- "What breaks" names the effect a person sees, not the rule: "hover drops between tabs", not "uses gap".
-- The fix names the section that holds the technique. Under the findings, list each technique used once, with its Support and Source lines.
-
-## Signals
+Load when: running the scan (SKILL.md step 3). Each row is a lead to confirm by reading the code, not a rule. Fix paths point into the `interface-mechanics` skill's `references/` folder.
 
 Area codes: MOT motion, INT input, PRF performance, A11 accessibility, TYP typography, COL color, LAY layout, MOB mobile, CMP components.
 
@@ -84,29 +44,3 @@ Area codes: MOT motion, INT input, PRF performance, A11 accessibility, TYP typog
 | CMP | char-limit | `maxLength` with no visible count | Typing stops with no reason given | `components.md` › Character limits that do not block typing |
 
 Skip MOB when the project is desktop only and say so in the report.
-
-## Report
-
-```markdown
-# Interface mechanics audit: <scope>
-
-<date> · <framework>, <styling>, <motion library>, <primitives>
-
-## Findings
-
-### High
-- `src/components/modal.tsx:14` · High · modal-focus · focus stays on the page behind the modal and is lost on close · fix: references/accessibility.md › Lock the background with inert and restore focus
-
-### Medium
-### Low
-
-## Techniques
-
-<each technique named above, with its Support and Source lines>
-
-## Checked
-
-<areas scanned; areas skipped and why>
-```
-
-Write "None" under an empty severity so reports line up when the user audits again. Offer the fixes as one batch per reference file, and apply a batch only when the user picks it.
