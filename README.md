@@ -89,7 +89,7 @@ The skill uses your project's easing, duration, and radius tokens. If the projec
 
 ## design-sys
 
-Platform-neutral design system values for web, iOS, Android and Figma, each with the reason and a **Source**. 47 values in eight small reference files, loaded one at a time. Most come from Apple's Human Interface Guidelines, Material, WCAG and the Design Tokens format. Others are tacit, and they cite the mechanism or a measurement in place of a link.
+Platform-neutral design system values for web, iOS, Android and Figma, each with the reason and a **Source**. 50 values in eight small reference files, loaded one at a time. Most come from Apple's Human Interface Guidelines, Material, WCAG and the Design Tokens format. Others are tacit, and they cite the mechanism or a measurement in place of a link.
 
 It covers the numbers agents usually guess:
 

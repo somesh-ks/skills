@@ -38,7 +38,7 @@
     },
     {
       "name": "design-sys",
-      "description": "Platform-neutral design values (hairlines per pixel density, per-platform type and target sizes, dark mode elevation, translation room), each with the reason and a source, plus a design system audit and builder.",
+      "description": "Platform-neutral design system values with the reason and a source (hairlines, per-platform type and target sizes, color roles, tokens and DTCG, component principles, dark mode elevation, fluid type, translation room), plus a design system audit and builder.",
       "source": "./",
       "strict": false,
       "skills": [
@@ -53,11 +53,13 @@
       "category": "design",
       "keywords": [
         "design-systems",
+        "design-tokens",
         "typography",
+        "color",
         "accessibility",
         "dark-mode",
         "ios",
-        "hig"
+        "android"
       ]
     }
   ]
