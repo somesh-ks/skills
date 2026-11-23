@@ -119,7 +119,7 @@ Aligns headers, bodies, and footers across cards of different lengths by sharing
 ```css
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); /* min() stops overflow below 280px */
   grid-auto-rows: auto auto 1fr auto; /* header, subtitle, body, footer */
   gap: 16px;
 }
@@ -132,7 +132,7 @@ Aligns headers, bodies, and footers across cards of different lengths by sharing
 ```
 
 **Support:** Baseline newly available 2023 (Chrome 117+, Safari 16+, Firefox 71+).
-**Source:** [web.dev: CSS subgrid](https://web.dev/articles/css-subgrid)
+**Source:** [web.dev: CSS subgrid](https://web.dev/articles/css-subgrid), [CSS-Tricks: intrinsically responsive grid with minmax() and min()](https://css-tricks.com/intrinsically-responsive-css-grid-with-minmax-and-min/)
 
 ## Balanced headings, pretty paragraphs
 

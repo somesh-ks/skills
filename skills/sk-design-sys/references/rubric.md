@@ -37,10 +37,11 @@ Contents:
 - No weight under 400 below about 28px. Fix: `type.md` › Light weights need size.
 - Text that wraps to three or more lines has line height of at least 1.4. Fix: `type.md` › Wrapped text never gets tight leading.
 - Emphasis inside a role changes weight, not size. Fix: `type.md` › Emphasis is a weight step, not a size step.
+- Fluid type mixes rem with vw, and no step's max exceeds 2.5 times its min. Fix: `type.md` › Fluid scales widen the ratio on large screens.
 
 ## Space
 
-- One spacing scale; no off-scale values in components.
+- One spacing scale; no off-scale values in components. On the web, fluid space derives from the type base. Fix: `space.md` › Fluid space comes from the type base.
 - Controls have about 12pt around bezeled and 24pt around borderless ones. Fix: `space.md` › Space around bezeled and borderless controls.
 - Text buttons pad about 2:1. Fix: `space.md` › Text button padding is about 2 to 1.
 - Edge buttons are inset by the margin plus the safe area. Fix: `space.md` › Inset edge buttons from the screen edge.

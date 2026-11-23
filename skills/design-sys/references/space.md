@@ -1,6 +1,6 @@
 # Space, targets and placement
 
-Load when: sizing tap and click targets for a platform, specifying a focus indicator, spacing adjacent controls, padding a text button, judging spacing by eye, placing buttons near screen edges, or spacing buttons in visionOS.
+Load when: sizing tap and click targets for a platform, specifying a focus indicator, spacing adjacent controls, padding a text button, judging spacing by eye, placing buttons near screen edges, spacing buttons in visionOS, or building a fluid space scale.
 Apple values verified against the HIG on 2026-11-22. The CSS for hit areas larger than their glyph and for icon-side button padding is in `design-eng` (`dom-input.md`, `components.md`).
 
 Contents:
@@ -11,6 +11,7 @@ Contents:
 - Inset edge buttons from the screen edge
 - visionOS buttons sit 60pt apart
 - Focus indicator size and contrast
+- Fluid space comes from the type base
 
 ## Target sizes per platform
 
@@ -71,3 +72,10 @@ A focus ring must be big enough and change enough to be seen. The strong standar
 
 **Support:** Any platform with keyboard focus: web, macOS, iPadOS with a keyboard, tvOS focus, Android with a keyboard.
 **Source:** [WCAG 2.2 Understanding: Focus Appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html), [WCAG 2.2: Non-text contrast](https://www.w3.org/TR/WCAG22/#non-text-contrast).
+
+## Fluid space comes from the type base
+
+Derive every space step as a multiple of the fluid body size, so space and type grow at the same rate and a layout keeps its proportions at every width. Where a gap should grow faster than the type, such as page gutters or section padding, interpolate between two steps (small at the narrowest screen, large at the widest) instead of adding a breakpoint.
+
+**Support:** The web. On native platforms, use the platform's fixed spacing and let Dynamic Type or font scale drive text.
+**Source:** [Smashing Magazine: Meet Utopia](https://www.smashingmagazine.com/2021/04/designing-developing-fluid-type-space-scales/) (space value pairs), [CSS-Tricks: Consistent, fluidly scaling type and spacing](https://css-tricks.com/consistent-fluidly-scaling-type-and-spacing/)

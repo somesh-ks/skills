@@ -1,11 +1,12 @@
 # Typography and layout mechanics
 
-Load when: sizing type to its container, avoiding layout shift from web fonts, editorial full-bleed grids, scoping styles to a component, optical sizing and weight transitions, aligning text optically in buttons, anchoring icons to multi-line titles, custom string truncation, descender-safe underlines, anchor scroll offset with scroll-margin-top, dark mode font smoothing on macOS, or keeping changing numbers from jittering.
+Load when: sizing type to its container, fluid type with clamp() that must survive zoom, avoiding layout shift from web fonts, editorial full-bleed grids, scoping styles to a component, optical sizing and weight transitions, aligning text optically in buttons, anchoring icons to multi-line titles, custom string truncation, descender-safe underlines, anchor scroll offset with scroll-margin-top, dark mode font smoothing on macOS, or keeping changing numbers from jittering.
 Type scale, measure, and hierarchy belong to the project's design system; this file holds mechanisms.
 Support lines verified against MDN on 2026-09-10.
 
 Contents:
 - Type that scales with its container
+- Fluid type that still zooms
 - Zero-shift font fallback with metric overrides
 - Full-bleed editorial grid
 - Scope styles to a component with @scope
@@ -39,6 +40,27 @@ Container query units size type to the card or column, not the viewport, so the 
 
 **Support:** Baseline widely available (Chrome 105+, Safari 16+, Firefox 110+).
 **Source:** [MDN: container query length units](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries#container_query_length_units)
+
+## Fluid type that still zooms
+
+Browser zoom scales `rem` but not `vw`, because zooming shrinks the viewport in CSS pixels. A preferred value of bare `vw` ignores zoom, so it fails WCAG 1.4.4. Mix the two: the `rem` intercept grows with zoom and the `vw` slope gives the growth.
+
+From a size `y1` at viewport `x1` to `y2` at `x2` (all px):
+
+- slope = `(y2 - y1) / (x2 - x1)`, written as `slope * 100` vw
+- intercept = `y1 - x1 * slope`, divided by 16 for rem
+
+```css
+/* 32px at 360px wide to 56px at 1280px wide */
+h1 {
+  font-size: clamp(2rem, 1.413rem + 2.609vw, 3.5rem);
+}
+```
+
+Keep the max at or below 2.5 times the min. At the browser's 500% zoom, the `rem` floor becomes 5 × min, and WCAG asks for 2 × the unzoomed size, which is at most 2 × max. So 5 × min ≥ 2 × max always passes; a wider range can stall below 200% on large windows. The same rule applies to `cqi` and other container units.
+
+**Support:** Baseline widely available (`clamp()` Chrome 79+, Safari 13.1+, Firefox 75+).
+**Source:** [Smashing Magazine: Addressing accessibility concerns with using fluid type](https://www.smashingmagazine.com/2023/11/addressing-accessibility-concerns-fluid-type/) (Maxwell Barvian, the 2.5 rule), [Smashing Magazine: Modern fluid typography using CSS clamp](https://www.smashingmagazine.com/2022/01/modern-fluid-typography-css-clamp/) (Adrian Bece, slope and intercept), [WCAG 2.2: 1.4.4 Resize text](https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html)
 
 ## Zero-shift font fallback with metric overrides
 

@@ -1,6 +1,6 @@
 # Type values
 
-Load when: choosing default or minimum text sizes for a platform, setting tracking per size, picking weights for small text, setting leading for text that wraps, adding emphasis inside a text role, deciding which text counts as large for contrast, or laying out for accessibility text sizes.
+Load when: choosing default or minimum text sizes for a platform, setting tracking per size, picking weights for small text, setting leading for text that wraps, adding emphasis inside a text role, deciding which text counts as large for contrast, laying out for accessibility text sizes, or choosing a fluid type scale for the web.
 Apple values verified against the HIG on 2026-11-22. The CSS for applying them (unitless line-height, `text-box`, tabular numbers) lives in `design-eng` and the project's type skill.
 
 Contents:
@@ -11,6 +11,7 @@ Contents:
 - Emphasis is a weight step, not a size step
 - Large text starts at different sizes
 - Layouts at accessibility text sizes
+- Fluid scales widen the ratio on large screens
 
 ## Default and minimum text per platform
 
@@ -78,3 +79,10 @@ At the largest text sizes (iOS AX1 to AX5 take body text from 28pt to 53pt), sid
 
 **Support:** iOS, iPadOS, watchOS and visionOS Dynamic Type; Android font scale; browser zoom and text size on the web (WCAG 1.4.4 asks for 200%).
 **Source:** [Apple HIG: Typography](https://developer.apple.com/design/human-interface-guidelines/typography) (Supporting Dynamic Type; AX sizes table).
+
+## Fluid scales widen the ratio on large screens
+
+A fluid scale is two scales: a tight one for the narrowest screen and a steeper one for the widest, with each step interpolated between them. Utopia's example runs 1.2 at 320px to 1.333 at 1500px. Body text barely moves; the top steps grow the most, because a phone has no room for dramatic contrast and a desktop wastes it without. Cap each step at 2.5 times its smallest size so zoom still works. The CSS is in `design-eng`: `typography.md` › Fluid type that still zooms.
+
+**Support:** The web. Native platforms scale type with Dynamic Type or font scale instead of viewport width.
+**Source:** [Utopia: Designing with fluid type scales](https://utopia.fyi/blog/designing-with-fluid-type-scales/), [Smashing Magazine: Meet Utopia](https://www.smashingmagazine.com/2021/04/designing-developing-fluid-type-space-scales/)

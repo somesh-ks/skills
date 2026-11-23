@@ -1,6 +1,6 @@
 ---
 name: design-sys
-description: "Platform-neutral design system values with the reason and a source: hairline weight per pixel density (0.33pt on 3x), type, target and spacing sizes per platform from Apple's HIG, Material and WCAG, color ramps and roles, token tiers and DTCG rules, component principles, dark mode elevation, and room for translated labels. Use for web, iOS or Android when asked 'how thin should a separator be', 'what body size on iOS', 'cards vanish in dark mode' or 'how should I name tokens'. Not for CSS or DOM code (use design-eng) or motion."
+description: "Platform-neutral design system values with the reason and a source: hairline weight per pixel density (0.33pt on 3x), type, target and spacing sizes per platform from Apple's HIG, Material and WCAG, color ramps and roles, token tiers and DTCG rules, component principles, dark mode elevation, and room for translated labels. Use for web, iOS or Android when asked 'how thin should a separator be', 'what body size on iOS', 'cards vanish in dark mode', 'how should I name tokens' or 'write a DTCG tokens file'. Not for CSS or DOM code (use design-eng) or motion."
 license: MIT
 metadata:
   author: somesh-ks
@@ -34,8 +34,8 @@ Fix them. End the reply with a short **Values** list: one line per value you set
 | Need | File |
 | --- | --- |
 | Hairlines and device pixels, pixel-grid snapping, web hairlines that survive rounding, icon weight and contrast beside text, glyphs below 20px, side margins for badged glyphs, optical overshoot | `references/pixels.md` |
-| Default and minimum text sizes per platform, tracking by size, light weights, leading for wrapped text, emphasis by weight, large-text contrast thresholds, layouts at accessibility text sizes | `references/type.md` |
-| Target sizes per platform (Apple, Android, WCAG), space around bezeled and borderless controls, text button padding ratio, optical spacing, inset edge buttons, visionOS button spacing, focus indicator size and contrast | `references/space.md` |
+| Default and minimum text sizes per platform, tracking by size, light weights, leading for wrapped text, emphasis by weight, large-text contrast thresholds, layouts at accessibility text sizes, fluid type scale ratios | `references/type.md` |
+| Target sizes per platform (Apple, Android, WCAG), space around bezeled and borderless controls, text button padding ratio, optical spacing, inset edge buttons, visionOS button spacing, focus indicator size and contrast, fluid space scales | `references/space.md` |
 | Breakpoints by window width, same features at every size, text expansion in translation, which icons mirror in right-to-left | `references/layout.md` |
 | Dark mode elevation and surface steps, dark accents and text, white images in dark mode, light direction for raised and inset, contact shadows | `references/depth.md` |
 | Ramp saturation and hue shifts, status pills, increased contrast per appearance, 7:1 for small text, semantic color roles | `references/color-values.md` |
