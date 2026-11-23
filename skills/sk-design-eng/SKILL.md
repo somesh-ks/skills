@@ -51,8 +51,9 @@ path:line · Severity · signal · what breaks, for whom · fix: <file>.md › <
 ```
 
 - `path:line` is the first line of the problem. Several lines in one file for the same signal stay one finding: `src/nav.tsx:12,18,31`.
+- Severity is the bare word High, Medium or Low. When a finding was raised for sitting on the main path, say so at the end of "what breaks" ("…, on the primary nav"), not beside the severity.
 - "What breaks" names the effect a person sees, not the rule: "hover drops between tabs", not "uses gap".
-- The fix names the `design-eng` reference and section that holds the technique; load that file when you apply it. Under the findings, list each technique used once, with its Support and Source lines.
+- The fix is the pointer to the `design-eng` reference and section that holds the technique, plus at most a short code hint in parentheses; the line ends there. Load that file when you apply it. Under the findings, list each technique used once, with its Support and Source lines.
 
 ## Report
 
