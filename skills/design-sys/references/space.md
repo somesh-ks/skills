@@ -23,7 +23,7 @@ Contents:
 | visionOS | 60×60pt | 28×28pt |
 | tvOS | 66×66pt | 56×56pt |
 | Android (Material 3) | 48×48dp (about 9mm), 8dp between targets | |
-| Web, WCAG 2.2 AA (2.5.8) | 24×24 CSS px, with exceptions | |
+| Web, WCAG 2.2 AA (2.5.8) | 24×24 CSS px, or smaller if a 24px circle centered on each target overlaps no other target or circle | |
 | Web, WCAG 2.2 AAA (2.5.5) | 44×44 CSS px | |
 
 The glyph can stay small; the target cannot. A 20px icon in a 44pt button is normal. A pointer-only desktop app can sit near the macOS numbers; anything touched sits near 44.

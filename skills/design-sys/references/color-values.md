@@ -1,6 +1,6 @@
 # Color values
 
-Load when: building or reviewing a color ramp, styling status badges, adding increased-contrast colors, picking a contrast target for small text on brand colors, or assigning semantic color roles.
+Load when: building or reviewing a color ramp, styling status badges, adding increased-contrast colors, picking a contrast target for small text on brand colors, assigning semantic color roles.
 Values verified on 2026-11-22. Gradient interpolation, relative color and `color-mix()` are in `design-eng` › `color.md`.
 
 Contents:

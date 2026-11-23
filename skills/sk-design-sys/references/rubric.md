@@ -88,13 +88,14 @@ Contents:
 - Targets meet the platform size. Fix: `space.md` › Target sizes per platform.
 - The focus indicator is at least 2px and 3:1. Fix: `space.md` › Focus indicator size and contrast.
 - Large-text thresholds use the stricter standard. Fix: `type.md` › Large text starts at different sizes.
-- Layouts survive the largest text sizes. Fix: `type.md` › Layouts at accessibility text sizes.
+- Layouts survive the largest text sizes. Fix: `type.md` › Layouts at accessibility text sizes; on Android, `type.md` › Android scales large text less than small text.
 
 ## Content
 
 - Button labels are verbs; case is consistent (sentence case by default).
 - Error messages say what happened and what to do next.
 - Each truncating component states how the full text is reached.
+- Money uses the currency's own decimals and the locale's separators. Fix (code): `numbers.md` › Currency decimals come from the currency.
 
 ## Themes and modes
 
@@ -112,7 +113,7 @@ Contents:
 
 ## Density
 
-- Density modes change padding and gaps only; type size and target floors stay.
+- Density modes shrink padding, gaps and the visible control height; type size and the hit-area floor stay. Fix: `space.md` › Target sizes per platform.
 
 ## Platform conventions
 
@@ -124,6 +125,7 @@ Contents:
 
 - Series colors are a separate categorical set, not the UI accent ramp.
 - No series is told apart by hue alone: add labels, markers or patterns.
+- Marks reach 3:1 against the background, and touching fills reach 3:1 against each other or are separated.
 - Sequential ramps change lightness steadily from one end to the other.
 
 ## Internationalization

@@ -11,6 +11,7 @@ Contents:
 - Emphasis is a weight step, not a size step
 - Large text starts at different sizes
 - Layouts at accessibility text sizes
+- Android scales large text less than small text
 - Fluid scales widen the ratio on large screens
 
 ## Default and minimum text per platform
@@ -79,6 +80,13 @@ At the largest text sizes (iOS AX1 to AX5 take body text from 28pt to 53pt), sid
 
 **Support:** iOS, iPadOS, watchOS and visionOS Dynamic Type; Android font scale; browser zoom and text size on the web (WCAG 1.4.4 asks for 200%).
 **Source:** [Apple HIG: Typography](https://developer.apple.com/design/human-interface-guidelines/typography) (Supporting Dynamic Type; AX sizes table).
+
+## Android scales large text less than small text
+
+From Android 14, the font size setting reaches 200%, and the curve is non-linear: 14sp body text roughly doubles, but headline and display sizes grow far less. Layouts sized as if every style scales by one factor leave large text too small in the mockup and body text overflowing in the build. Size text in sp, test at the 200% setting, and never compute pixels as `fontScale × size`; sp values are not additive either (4sp + 20sp may not equal 24sp), so convert each size through the platform.
+
+**Support:** Android 14 (API 34) and later. iOS Dynamic Type has its own per-style table (see Layouts at accessibility text sizes).
+**Source:** [Android Developers: Non-linear font scaling to 200%](https://developer.android.com/about/versions/14/features#non-linear-font-scaling)
 
 ## Fluid scales widen the ratio on large screens
 

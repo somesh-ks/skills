@@ -1,6 +1,6 @@
 ---
 name: design-eng
-description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, a wobbling spinner, fluid type with clamp(), theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and to review UI code. Not for visual style, palettes, layout taste, copy, deciding whether to animate, or platform-neutral values such as hairline weight and per-platform sizes (use design-sys)."
+description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, a wobbling spinner, fluid type with clamp(), money formatting, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and UI code review. Not for visual style, palettes, layout taste, copy, deciding whether to animate, or platform-neutral values such as hairline weight and per-platform sizes (use design-sys)."
 license: MIT
 metadata:
   author: somesh-ks
@@ -45,6 +45,7 @@ Fix them in the code. End the reply with a short **Mechanics** list: one line pe
 | light-dark(), theme switch without a smear, relative color, perceptual gradient interpolation (oklab/oklch), SVG noise and grain tiles, color-mix overlays, P3, plus-lighter, contrast-color() | `references/color.md` |
 | inert with focus restore, focus rings, reduced motion, sr-only, live announcements, forced colors | `references/accessibility.md` |
 | Tap highlight, touch-action, rubber-band overscroll canvas, dvh, safe area, input zoom, scrollbars | `references/mobile.md` |
+| Currency decimals per currency, minor units | `references/numbers.md` |
 | Slot and asChild, controlled plus uncontrolled state, tabs with ARIA, distance-aware tab motion, dropdown sizing and truncation, optical padding for icon buttons, buttons that keep their size across loading, icon, and label states, character limits | `references/components.md` |
 
 ## Rules
