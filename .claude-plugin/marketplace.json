@@ -33,6 +33,29 @@
         "performance",
         "design-engineering"
       ]
+    },
+    {
+      "name": "design-craft",
+      "description": "Platform-neutral design values (hairlines per pixel density, per-platform type and target sizes, dark mode elevation), each with the reason and a source.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/design-craft"
+      ],
+      "author": {
+        "name": "somesh-ks"
+      },
+      "repository": "https://github.com/somesh-ks/skills",
+      "license": "MIT",
+      "category": "design",
+      "keywords": [
+        "design-systems",
+        "typography",
+        "accessibility",
+        "dark-mode",
+        "ios",
+        "hig"
+      ]
     }
   ]
 }

@@ -1,10 +1,10 @@
 ---
 name: interface-mechanics
-description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, a wobbling spinner, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and to review UI code. Not for visual style, palettes, layout taste, copy, or deciding whether to animate."
+description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones between targets, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, a button that shifts when a spinner swaps in, a wobbling spinner, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and to review UI code. Not for visual style, palettes, layout taste, copy, deciding whether to animate, or platform-neutral values such as hairline weight and per-platform sizes (use design-craft)."
 license: MIT
 metadata:
   author: somesh-ks
-  version: "1.1.0"
+  version: "1.1.1"
   verified: "2026-09-10"
 ---
 

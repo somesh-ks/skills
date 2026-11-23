@@ -76,6 +76,26 @@ Add `modernize` to find script and dependencies the platform now replaces: JS to
 
 The skill uses your project's easing, duration, and radius tokens. If the project has none, it falls back to the defaults in [`SKILL.md`](skills/interface-mechanics/SKILL.md#default-tokens).
 
+## design-craft
+
+Platform-neutral design values for web, iOS, Android and Figma, each with the reason and a **Source**. About 30 values in four small reference files, loaded one at a time. Some come from Apple's Human Interface Guidelines and WCAG. Others are tacit, and they cite the mechanism or a measurement in place of a link.
+
+It covers the numbers agents usually guess:
+
+- Hairlines are one device pixel: 0.33pt on a 3x iPhone. On the web, a fractional `border` rounds up to a full pixel (measured in Chromium), so the skill uses an inset shadow gated by resolution
+- Default and minimum text sizes, target sizes and control spacing per platform
+- Tracking by size, light weights only at display sizes, leading for text that wraps
+- Dark mode elevation with lighter surface steps instead of shadows, with the arithmetic
+- Icons that out-weigh their labels, badged glyph margins, optical overshoot
+
+It gives the value and stops. The CSS that applies a value lives in `interface-mechanics`.
+
+```bash
+npx skills add somesh-ks/skills --skill design-craft
+```
+
+Claude Code, as a plugin: `/plugin install design-craft@somesh-ks`.
+
 ## Evals
 
 `evals/` holds a runnable suite for `claude plugin eval` (Claude Code): build, answer, and audit cases graded on what the skill adds, plus should-not-trigger cases near its boundary (palettes, copy, whether to animate). See [`evals/README.md`](evals/README.md).
