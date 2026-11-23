@@ -1,6 +1,6 @@
 # Modernize
 
-Load when: the user asks to modernize, simplify, or drop dependencies, or runs the audit with the `modernize` lens. The broken-mechanics audit asks what is wrong; this lens asks what the platform now does for you. Each finding replaces script or a dependency with a feature from `interface-mechanics`, and carries that feature's Support line, so the user can see what it costs to adopt.
+Load when: the user asks to modernize, simplify, or drop dependencies, or runs the audit with the `modernize` lens. The broken-mechanics audit asks what is wrong; this lens asks what the platform now does for you. Each finding replaces script or a dependency with a feature from `design-eng`, and carries that feature's Support line, so the user can see what it costs to adopt.
 
 ## Readiness
 

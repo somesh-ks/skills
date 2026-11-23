@@ -15,6 +15,8 @@
       "source": "./",
       "strict": false,
       "skills": [
+        "./skills/design-eng",
+        "./skills/sk-design-eng",
         "./skills/interface-mechanics",
         "./skills/sk-interface-audit"
       ],
@@ -32,6 +34,32 @@
         "accessibility",
         "performance",
         "design-engineering"
+      ]
+    },
+    {
+      "name": "design-sys",
+      "description": "Platform-neutral design system values with the reason and a source (hairlines, per-platform type and target sizes, color roles, tokens and DTCG, component principles, dark mode elevation, fluid type, translation room), plus a design system audit and builder.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/design-sys",
+        "./skills/sk-design-sys"
+      ],
+      "author": {
+        "name": "somesh-ks"
+      },
+      "repository": "https://github.com/somesh-ks/skills",
+      "license": "MIT",
+      "category": "design",
+      "keywords": [
+        "design-systems",
+        "design-tokens",
+        "typography",
+        "color",
+        "accessibility",
+        "dark-mode",
+        "ios",
+        "android"
       ]
     }
   ]

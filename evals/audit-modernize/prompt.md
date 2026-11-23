@@ -1,12 +1,12 @@
 ---
 name: audit-modernize
 tags: [audit, modernize]
-plugins: [../../skills/sk-interface-audit, ../../skills/interface-mechanics]
+plugins: [../../skills/sk-design-eng, ../../skills/design-eng]
 max_turns: 8
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
 
-/sk-interface-audit modernize these three files. They are the whole UI; there is nothing else to scan, and there is no browserslist.
+/sk-design-eng modernize these three files. They are the whole UI; there is nothing else to scan, and there is no browserslist.
 
 `src/Tooltip.tsx`
 ```tsx

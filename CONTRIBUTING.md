@@ -21,6 +21,7 @@ Every technique needs:
 - Working code
 - A **Support** line checked against MDN or caniuse
 - A **Source** link to a primary source: the spec, MDN, a browser vendor, or a named author's article. No social media posts and no other skill repos.
+- In `design-sys`, a tacit value with no published source may cite `Mechanism:` (the reason, in one line) or `Measurement:` (what was measured, where, and the result) instead of a link.
 
 All pull requests are reviewed by [@somesh-ks](https://github.com/somesh-ks). CI runs only after approval for outside contributors. Not every pull request will be merged; the skill stays small on purpose.
 

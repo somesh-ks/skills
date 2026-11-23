@@ -1,7 +1,7 @@
 ---
 name: build-tab-bar
 tags: [build, proactive]
-plugins: [../../skills/interface-mechanics]
+plugins: [../../skills/design-eng]
 max_turns: 8
 allowed_tools: [Read, Glob, Grep, Skill]
 ---

@@ -1,6 +1,6 @@
 # Signals
 
-Load when: running the scan (SKILL.md step 3). Each row is a lead to confirm by reading the code, not a rule. Fix paths point into the `interface-mechanics` skill's `references/` folder.
+Load when: running the scan (SKILL.md step 3). Each row is a lead to confirm by reading the code, not a rule. Fix paths point into the `design-eng` skill's `references/` folder.
 
 Area codes: MOT motion, INT input, PRF performance, A11 accessibility, TYP typography, COL color, LAY layout, MOB mobile, CMP components.
 
