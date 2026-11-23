@@ -58,7 +58,7 @@ Needs `design-sys` installed beside it, and `design-eng` for the CSS. If either 
 <anything out of reach, such as Figma files or native code>
 ```
 
-Every domain appears in the scorecard, even N/A. Offer fixes as one batch per domain, and apply a batch only when the user picks it.
+Every domain appears in the scorecard, even N/A. All findings lists only checks that fail: a met check goes in the scorecard evidence, not here. Give each domain with a failure its own heading, in rubric order, and never merge domains under one heading. Every line follows the finding format, starting with `path:line`, a token name, or `not found`. A check with no Fix pointer in the rubric gets `fix: <what to change> · principle` instead of a file pointer, so the reader knows no design-sys value backs it. Offer fixes as one batch per domain, and apply a batch only when the user picks it.
 
 ## Build
 
