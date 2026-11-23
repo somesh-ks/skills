@@ -133,6 +133,12 @@ Contents:
 - Short labels have room to grow two to three times. Fix: `layout.md` › Short labels grow most in translation.
 - Direction icons mirror in right-to-left; universal marks do not. Fix: `layout.md` › Mirror direction, not meaning.
 - No text is baked into images.
+- Every passage in another language carries its own `lang`, so CJK glyphs, hyphenation and case mapping follow it.
+- User-generated text inside translated strings is direction-isolated (`<bdi>` or `dir="auto"`).
+- Joined scripts such as Arabic get no letter-spacing; CJK gets no synthesized italic.
+- Line breaking is set per script: Korean `word-break: keep-all`, Japanese phrase breaking.
+- Text boxes leave vertical room for scripts with marks above and below the line (Thai, Vietnamese, Devanagari).
+- Dates, numbers, currency, plurals and the first day of the week come from the locale, not from code.
 
 ## Governance
 

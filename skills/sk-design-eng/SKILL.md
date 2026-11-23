@@ -1,6 +1,6 @@
 ---
 name: sk-design-eng
-description: "Audits web UI code for broken interface mechanics: hover dead zones, buttons that change size, theme smears, missing exit animations, clipped tooltips, lost focus, 100vh and iOS input zoom, scroll jank, and about 30 more signals. Reports path:line findings graded High, Medium, or Low, each with the design-eng technique that fixes it. A modernize lens instead finds script and dependencies the platform now replaces (JS positioning, exit animations, height measuring, autosize, focus traps), graded by browser support. Run it as /sk-design-eng on a file, a diff, a folder, or the project; add modernize for that lens."
+description: "Audits web UI code for broken interface mechanics: hover dead zones, buttons that change size, theme smears, missing exit animations, clipped tooltips, lost focus, 100vh and iOS input zoom, scroll jank, multilingual and right-to-left traps, and about 30 more signals. Reports path:line findings graded High, Medium, or Low, each with the design-eng technique that fixes it. A modernize lens instead finds script and dependencies the platform now replaces (JS positioning, exit animations, height measuring, autosize, focus traps), graded by browser support. Run it as /sk-design-eng on a file, a diff, a folder, or the project; add modernize for that lens."
 disable-model-invocation: true
 license: MIT
 metadata:

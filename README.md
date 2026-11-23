@@ -75,7 +75,7 @@ Answers include the Support and Source lines under each snippet, so you can chec
 /sk-design-eng src/components
 ```
 
-It scans for 36 signals, confirms each by reading the code, and reports `path:line · severity · signal · what breaks · fix`, High first, with the Support and Source for each technique. It finds and grades; the fixes come from `design-eng`, so install both. It does not edit code until you pick a fix batch. As a Claude Code plugin: `/interface-mechanics:sk-design-eng`.
+It scans for 44 signals, including 8 for multilingual and right-to-left apps, confirms each by reading the code, and reports `path:line · severity · signal · what breaks · fix`, High first, with the Support and Source for each technique. It finds and grades; the fixes come from `design-eng`, so install both. It does not edit code until you pick a fix batch. As a Claude Code plugin: `/interface-mechanics:sk-design-eng`.
 
 Add `modernize` to find script and dependencies the platform now replaces: JS tooltip positioning, exit animations, measured height, textarea autosize, focus traps, and more. Each finding is graded Now, Enhance, or Wait from its browser support, and says what it removes:
 

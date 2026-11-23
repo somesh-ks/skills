@@ -2,7 +2,7 @@
 
 Load when: running the scan (SKILL.md step 3). Each row is a lead to confirm by reading the code, not a rule. Fix paths point into the `design-eng` skill's `references/` folder.
 
-Area codes: MOT motion, INT input, PRF performance, A11 accessibility, TYP typography, COL color, LAY layout, MOB mobile, CMP components.
+Area codes: MOT motion, INT input, PRF performance, A11 accessibility, TYP typography, COL color, LAY layout, MOB mobile, CMP components, I18 international. Run the I18 rows only when the project ships more than one language or any right-to-left one.
 
 | Area | Signal | Look for | Breaks | Fix |
 | --- | --- | --- | --- | --- |
@@ -42,5 +42,13 @@ Area codes: MOT motion, INT input, PRF performance, A11 accessibility, TYP typog
 | CMP | tabs-aria | *read*: tabs without `role="tablist"`, `role="tab"`, `aria-selected`, and arrow keys | Not operable as tabs | `components.md` › Tabs styled from data attributes |
 | CMP | controlled-only | Components that take `value` and not `defaultValue` | Every consumer must wire state | `components.md` › Controlled and uncontrolled in one hook |
 | CMP | char-limit | `maxLength` with no visible count | Typing stops with no reason given | `components.md` › Character limits that do not block typing |
+| I18 | physical-sides | `margin-left`, `padding-right`, `left:`, `text-align:\s*left`, `\bml-`, `\bpr-`, `\bleft-` in components | Layout does not mirror in Arabic or Hebrew | Logical properties (`margin-inline-start`, Tailwind `ms-` and `pe-`); `layout.md` › Mirror direction, not meaning |
+| I18 | ime-enter | `key === ['"]Enter` on a text field that submits, with no `isComposing` and no `keyCode === 229` | Enter that confirms a Japanese or Chinese conversion sends half-typed text | Skip Enter while `event.isComposing` or `keyCode === 229` (Safari reports the confirming Enter after composition ends) |
+| I18 | no-bidi-isolate | *read*: user names, titles or other user text interpolated into a translated string with no `<bdi>` or `dir="auto"` | A Latin name inside Arabic text reorders the sentence and its punctuation | Wrap each user value in `<bdi>` |
+| I18 | tracked-script | `letter-spacing`, `tracking-` on text that can render Arabic, with no `:lang(ar)` reset | Spacing pulls joined Arabic letters apart | Reset `letter-spacing: 0` under `:lang(ar)` and other joined scripts |
+| I18 | fixed-label | Fixed `width` or `w-` on buttons, tabs or chips with text; `truncate` on labels under about 20 characters | Translated labels clip or ellipsize | Let width follow content; `layout.md` › Short labels grow most in translation |
+| I18 | tight-line-box | Fixed `height` or `h-` with `overflow-hidden`, or line-height under 1.3, on text labels | Thai, Vietnamese and Devanagari marks above and below the line get clipped | `min-height` instead of `height`, line-height of at least 1.5 for those scripts |
+| I18 | hand-formatted | `toFixed\(`, `/ 100`, `toLocaleString\(\)` or `toLocaleDateString\(\)` with no locale, currency symbols concatenated into strings | Wrong decimals, separators and date order per locale | `Intl` with the user's locale; `numbers.md` › Currency decimals come from the currency |
+| I18 | missing-lang | `<html` with no `lang`, or content in another language with no `lang` on its element | Wrong CJK glyph forms, no hyphenation, wrong case mapping and screen reader voice | Set `lang` on the document and on every passage in another language |
 
-Skip MOB when the project is desktop only and say so in the report.
+Skip MOB when the project is desktop only, and I18 when it ships one left-to-right language; say so in the report.
