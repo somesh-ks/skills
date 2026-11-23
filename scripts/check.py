@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parent.parent
 POINTER = re.compile(r"`(?:references/)?([\w-]+\.md)` › ([^|;`\n]+)")
 errors = []
 
-# Pointers may name a reference in any skill (sk-interface-audit points into
-# interface-mechanics), so resolve against every skill's headings.
+# Pointers may name a reference in any skill (sk-design-eng points into
+# design-eng), so resolve against every skill's headings.
 ALL_HEADINGS = {}
 for ref in ROOT.glob("skills/*/references/*.md"):
     ALL_HEADINGS.setdefault(ref.name, []).extend(

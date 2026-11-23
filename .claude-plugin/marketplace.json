@@ -15,6 +15,8 @@
       "source": "./",
       "strict": false,
       "skills": [
+        "./skills/design-eng",
+        "./skills/sk-design-eng",
         "./skills/interface-mechanics",
         "./skills/sk-interface-audit"
       ],
@@ -35,12 +37,13 @@
       ]
     },
     {
-      "name": "design-craft",
-      "description": "Platform-neutral design values (hairlines per pixel density, per-platform type and target sizes, dark mode elevation), each with the reason and a source.",
+      "name": "design-sys",
+      "description": "Platform-neutral design values (hairlines per pixel density, per-platform type and target sizes, dark mode elevation, translation room), each with the reason and a source, plus a design system audit and builder.",
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/design-craft"
+        "./skills/design-sys",
+        "./skills/sk-design-sys"
       ],
       "author": {
         "name": "somesh-ks"

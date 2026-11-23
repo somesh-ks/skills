@@ -1,7 +1,7 @@
 ---
 name: no-whether-animate
 tags: [negative]
-plugins: [../../skills/interface-mechanics]
+plugins: [../../skills/design-eng]
 max_turns: 4
 allowed_tools: [Read, Glob, Grep, Skill]
 ---
