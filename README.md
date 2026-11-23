@@ -78,12 +78,12 @@ The skill uses your project's easing, duration, and radius tokens. If the projec
 
 ## design-craft
 
-Platform-neutral design values for web, iOS, Android and Figma, each with the reason and a **Source**. About 30 values in four small reference files, loaded one at a time. Some come from Apple's Human Interface Guidelines and WCAG. Others are tacit, and they cite the mechanism or a measurement in place of a link.
+Platform-neutral design values for web, iOS, Android and Figma, each with the reason and a **Source**. About 40 values in five small reference files, loaded one at a time. Some come from Apple's Human Interface Guidelines and WCAG. Others are tacit, and they cite the mechanism or a measurement in place of a link.
 
 It covers the numbers agents usually guess:
 
 - Hairlines are one device pixel: 0.33pt on a 3x iPhone. On the web, a fractional `border` rounds up to a full pixel (measured in Chromium), so the skill uses an inset shadow gated by resolution
-- Default and minimum text sizes, target sizes and control spacing per platform
+- Default and minimum text sizes, target sizes and control spacing per platform, breakpoints, and room for translated labels
 - Tracking by size, light weights only at display sizes, leading for text that wraps
 - Dark mode elevation with lighter surface steps instead of shadows, with the arithmetic
 - Icons that out-weigh their labels, badged glyph margins, optical overshoot

@@ -7,6 +7,7 @@ Contents:
 - Hairline is one device pixel
 - Web hairlines: borders snap, shadows do not
 - Snap shapes to whole points at 1x
+- Icon weight matches the text weight
 - Icons look heavier than the text beside them
 - Simplify glyphs below 20px
 - Negative side margins for badged glyphs
@@ -67,6 +68,13 @@ Put vector points and edges on whole values at 1x. Because 2x and 3x are whole m
 
 **Support:** Any vector tool or renderer: Figma, SF Symbols templates, SVG, Canvas, Core Graphics.
 **Source:** [Apple HIG: Images](https://developer.apple.com/design/human-interface-guidelines/images) (control points at whole values). Mechanism: a centered stroke extends `width / 2` either side of the path.
+
+## Icon weight matches the text weight
+
+An icon beside a label should share the label's stroke weight: a hairline glyph next to semibold text looks broken, a bold glyph next to regular text shouts. SF Symbols ships nine weights mapped one to one onto San Francisco's weights for exactly this, plus three scales (small, medium, large) set against the font's cap height, so emphasis can change without breaking the weight match. With a single-weight icon set, pick the stroke per text weight and pin it at the rendered size; the numbers and CSS are in `interface-mechanics` › `css-visual.md` › Icon stroke that survives scaling.
+
+**Support:** Any platform. SF Symbols on Apple platforms; variable icon fonts such as Material Symbols expose a weight axis.
+**Source:** [Apple HIG: SF Symbols](https://developer.apple.com/design/human-interface-guidelines/sf-symbols) (nine weights matched to the system font; scales relative to cap height).
 
 ## Icons look heavier than the text beside them
 

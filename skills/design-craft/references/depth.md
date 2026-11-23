@@ -12,6 +12,8 @@ Contents:
 - Contact shadows fade as elevation rises
 - One or two prominent actions per view
 - Status pills flip contrast
+- Ramp ends need more saturation
+- Shift hue to lighten or darken
 - Increased contrast is a variant per appearance
 - Small text on custom colors aims for 7:1
 
@@ -70,6 +72,20 @@ White text on a saturated status color needs a very dark background to reach 4.5
 
 **Support:** Any platform.
 **Source:** Adam Wathan and Steve Schoger, *Refactoring UI* ("flip the contrast"). [Apple HIG: Color](https://developer.apple.com/design/human-interface-guidelines/color) (do not rely on color alone).
+
+## Ramp ends need more saturation
+
+At the same saturation number, a color looks greyer as it nears white or black, so a ramp built at one saturation fades at both ends. Raise saturation (or chroma, within gamut) for the lightest and darkest steps compared with the middle one. Tinted greys follow the same rule, or the palest and darkest greys drift back to neutral next to the mid-tones.
+
+**Support:** Any platform and color space. In OKLCH the darkest and lightest steps are also where sRGB gamut runs out, so check the clipped value.
+**Source:** Adam Wathan and Steve Schoger, *Refactoring UI* ("don't let lightness kill your saturation").
+
+## Shift hue to lighten or darken
+
+Hues differ in how bright they look at the same lightness: yellow, cyan and magenta read bright, and red, green and blue read dark. To lighten a step without washing it out, rotate its hue toward the nearest bright one; to darken, toward the nearest dark one. Cap the shift at about 20–30 degrees across the whole ramp, or the step reads as a different color. This is why a good yellow ramp darkens toward orange, not toward olive.
+
+**Support:** Any platform and color space.
+**Source:** Adam Wathan and Steve Schoger, *Refactoring UI* ("perceived brightness"). Mechanism: luminance weights green most and blue least, so hue alone moves perceived brightness.
 
 ## Increased contrast is a variant per appearance
 

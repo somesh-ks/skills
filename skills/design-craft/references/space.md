@@ -1,6 +1,6 @@
 # Space, targets and placement
 
-Load when: sizing tap and click targets for a platform, spacing adjacent controls, padding a text button, judging spacing by eye, placing buttons near screen edges, or spacing buttons in visionOS.
+Load when: sizing tap and click targets for a platform, specifying a focus indicator, spacing adjacent controls, padding a text button, judging spacing by eye, placing buttons near screen edges, or spacing buttons in visionOS.
 Apple values verified against the HIG on 2026-11-22. The CSS for hit areas larger than their glyph and for icon-side button padding is in `interface-mechanics` (`dom-input.md`, `components.md`).
 
 Contents:
@@ -10,6 +10,7 @@ Contents:
 - Measure space between points of high contrast
 - Inset edge buttons from the screen edge
 - visionOS buttons sit 60pt apart
+- Focus indicator size and contrast
 
 ## Target sizes per platform
 
@@ -20,13 +21,14 @@ Contents:
 | watchOS | 44×44pt | 28×28pt |
 | visionOS | 60×60pt | 28×28pt |
 | tvOS | 66×66pt | 56×56pt |
+| Android (Material 3) | 48×48dp (about 9mm), 8dp between targets | |
 | Web, WCAG 2.2 AA (2.5.8) | 24×24 CSS px, with exceptions | |
 | Web, WCAG 2.2 AAA (2.5.5) | 44×44 CSS px | |
 
 The glyph can stay small; the target cannot. A 20px icon in a 44pt button is normal. A pointer-only desktop app can sit near the macOS numbers; anything touched sits near 44.
 
 **Support:** Any platform.
-**Source:** [Apple HIG: Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility) (control sizes table), [WCAG 2.2: Target size (minimum)](https://www.w3.org/TR/WCAG22/#target-size-minimum).
+**Source:** [Apple HIG: Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility) (control sizes table), [Material 3: Accessibility designing](https://m3.material.io/foundations/designing/structure) (48dp targets, 8dp apart), [WCAG 2.2: Target size (minimum)](https://www.w3.org/TR/WCAG22/#target-size-minimum).
 
 ## Space around bezeled and borderless controls
 
@@ -62,3 +64,10 @@ Gaze targeting is less precise than a finger, and the hover highlight grows arou
 
 **Support:** visionOS.
 **Source:** [Apple HIG: Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons) (visionOS: centers at least 60 pts apart, 4 pts of padding).
+
+## Focus indicator size and contrast
+
+A focus ring must be big enough and change enough to be seen. The strong standard (WCAG 2.2 AAA, 2.4.13) asks for an indicator with at least the area of a 2 CSS px thick line around the component, changing by at least 3:1 between focused and unfocused pixels. At AA, 1.4.11 asks for 3:1 between the indicator and the colors next to it. A 2px solid ring offset 2px from the component, in a color that passes 3:1 on every surface it can sit on, meets both. A 1px ring, or a background tint alone, usually meets neither.
+
+**Support:** Any platform with keyboard focus: web, macOS, iPadOS with a keyboard, tvOS focus, Android with a keyboard.
+**Source:** [WCAG 2.2 Understanding: Focus Appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html), [WCAG 2.2: Non-text contrast](https://www.w3.org/TR/WCAG22/#non-text-contrast).
