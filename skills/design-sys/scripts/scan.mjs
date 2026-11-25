@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spring scan, generated from github.com/somesh-ks/portfolio@c0ce185 (src/lib/spring).
+// Spring scan, generated from github.com/somesh-ks/portfolio@41d8dfb (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
 import { lstatSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
