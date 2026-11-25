@@ -4,6 +4,7 @@ description: "Renamed to design-eng. Run /interface-mechanics only to learn the 
 disable-model-invocation: true
 license: MIT
 metadata:
+  internal: true
   author: somesh-ks
   version: "2.0.0"
 ---
@@ -13,7 +14,7 @@ metadata:
 This skill is now `design-eng`. Same content, new name. Tell the user to install it and remove this one:
 
 ```bash
-npx skills add somesh-ks/skills --skill design-eng --skill sk-design-eng
+npx skills add somesh-ks/skills
 ```
 
 Claude Code plugin users run `/plugin marketplace update somesh-ks`; the plugin keeps the name `interface-mechanics`.
