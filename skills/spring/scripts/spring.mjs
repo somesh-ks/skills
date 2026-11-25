@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spring CLI, generated from github.com/somesh-ks/portfolio@9903122 (src/lib/spring).
+// Spring CLI, generated from github.com/somesh-ks/portfolio@f5da7de (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
 import { lstatSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -1408,6 +1408,7 @@ function googleFontsUrl(fonts, extra) {
 
 // src/lib/spring/charts.ts
 var CHART_MAX = 10;
+var CHART_SUGGESTED = 6;
 var VISIONS = ["normal", "protan", "deutan", "tritan"];
 var SIM = {
   protan: [
@@ -2061,7 +2062,7 @@ function buildSystem(input) {
   };
   const neutral = buildNeutral(input.neutralHue ?? input.primary.hue, input.neutralTint, flat);
   const pages = { light: neutral.light[0].hex, dark: neutral.dark[0].hex };
-  const dataIn = input.data ?? named(suggest(input.primary, 6, pages, input.curve));
+  const dataIn = input.data ?? named(suggest(input.primary, CHART_SUGGESTED, pages, input.curve));
   const colorsIn = input.colors ?? [];
   const keys = stripKeys([...colorsIn, ...dataIn]);
   const strip = (c, i) => ({
@@ -3776,7 +3777,7 @@ function decodeInput(s) {
       ...a[11] === "aaa" || a[11] === "apca" ? { contrast: a[11] } : {},
       ...colors ? { colors } : {},
       ...data ? { data } : {},
-      ...Array.isArray(a[15]) && (data || !Array.isArray(a[14])) ? { ramps: ramps(a[15], data?.length ?? CHART_MAX) } : {}
+      ...Array.isArray(a[15]) && (data || !Array.isArray(a[14])) ? { ramps: ramps(a[15], data?.length ?? CHART_SUGGESTED) } : {}
     };
   } catch {
     return null;
@@ -3912,8 +3913,14 @@ function withFonts(raw, notes) {
     type[role] = r[0];
     extra[r[0]] = { tag: TAG[r[1]] ?? "sans", weights: r[2], variable: r[3] || null };
   }
+  const used = new Set(["body", "heading", "mono"].map((r) => type[r]));
+  for (const n of Object.keys(extra))
+    if (!used.has(n))
+      delete extra[n];
   if (Object.keys(extra).length)
     type.extra = extra;
+  else
+    delete type.extra;
   raw.type = type;
 }
 
@@ -3944,7 +3951,7 @@ function themeOf(ctx) {
   if (parts.some((p) => DARK_PART.test(p)))
     return { mode: "dark" };
   for (const p of parts) {
-    const m = p.match(/\[data-(?:theme|mode|color-scheme|bs-theme)\s*=\s*["']?([\w-]+)/i) ?? p.match(/^(?:html|:root|body)?\.theme-([\w-]+)$/i);
+    const m = p.match(/^(?:html|:root|body|:host)?\[data-(?:theme|mode|color-scheme|bs-theme)\s*=\s*["']?([\w-]+)["']?\]$/i) ?? p.match(/^(?:html|:root|body)?\.theme-([\w-]+)$/i);
     if (m)
       return { mode: m[1].toLowerCase() === "light" ? "light" : m[1].toLowerCase() };
     if (/^(?:html|:root)?\.light$/i.test(p))
@@ -4181,10 +4188,14 @@ function readTailwind(text, path, acc) {
     return 0;
   }
   const before = acc.tokens.size;
-  const t = { ...theme };
-  if (isObj2(theme.extend))
-    for (const [k, v] of Object.entries(theme.extend))
-      t[k] = isObj2(t[k]) && isObj2(v) ? { ...t[k], ...v } : v;
+  const merge = (a, b) => {
+    const out = { ...a };
+    for (const [k, v] of Object.entries(b))
+      if (k !== "__proto__")
+        out[k] = isObj2(out[k]) && isObj2(v) ? merge(out[k], v) : v;
+    return out;
+  };
+  const t = isObj2(theme.extend) ? merge(theme, theme.extend) : { ...theme };
   for (const [key, ns] of Object.entries(TW_NS)) {
     const flat = (o, trail) => {
       if (isObj2(o)) {
@@ -4401,7 +4412,7 @@ function kind(name, value) {
   return "other";
 }
 function isColor2(v) {
-  return !!colorOf(v);
+  return !!colorOf(v) || /^(color|oklab|lab|lch|hwb)\(/i.test(v.trim());
 }
 function colorOf(v) {
   const s = v.trim();
@@ -4536,7 +4547,7 @@ function sources(root, all) {
 var COLOR_UTIL = "bg|text|border(?:-[trblxyse])?|ring(?:-offset)?|fill|stroke|from|via|to|outline|decoration|divide|placeholder|accent|caret|shadow";
 var UTIL = new RegExp(String.raw`(?<![\w-])(${COLOR_UTIL}|rounded(?:-[trblse]{1,2})?|font|leading|tracking|ease|duration|p[xytrbl]?|m[xytrbl]?|gap(?:-[xy])?|space-[xy]|w|h|size|inset|top|left|right|bottom)-([a-z0-9][\w.-]*?)(?:\/[\w.]+)?(?![\w-])`, "g");
 var PALETTE = "slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose";
-var OFF = new RegExp(String.raw`(?<![\w-])(?:[\w-]+:)*(?:${COLOR_UTIL})-(?:(${PALETTE})-(?:50|[1-9]00|950)|\[(?:#[0-9a-f]{3,8}|(?:rgb|hsl|oklch)a?\([^\]]*\))\])(?:\/[\w.]+)?(?![\w-])`, "gi");
+var OFF = new RegExp(String.raw`(?<![\w-])(?:[\w-]+:)*(?:${COLOR_UTIL})-(?:((?:${PALETTE})-(?:50|[1-9]00|950))|\[(?:#[0-9a-f]{3,8}|(?:rgb|hsl|oklch)a?\([^\]]*\))\])(?:\/[\w.]+)?(?![\w-])`, "gi");
 var LITERAL = /#[0-9a-f]{8}\b|#[0-9a-f]{6}\b|#[0-9a-f]{3,4}\b|\b(?:rgba?|hsla?|oklch|oklab|lab|lch)\([^)]*\)/gi;
 var STYLE_LINE = /(color|background|border|fill|stroke|shadow|style|className|class=|theme|palette|gradient)/i;
 var DEFINES = /(^|[{;\s])--[\w-]+\s*:/;
@@ -4566,7 +4577,6 @@ function candidates(util, x) {
 function usage(root, files, view, defs) {
   const names = new Set(Object.keys(view.tokens));
   const refs = Object.fromEntries([...names].map((n) => [n, 0]));
-  const groups = new Set(Object.keys(view.tokens).map((n) => n.replace(/^color-/, "").split("-")[0]));
   const raw = [];
   const offSystem = [];
   let rawCount = 0;
@@ -4602,7 +4612,8 @@ function usage(root, files, view, defs) {
               refs[c]++;
       }
       for (const m of line.matchAll(OFF)) {
-        if (m[1] && groups.has(m[1].toLowerCase()))
+        const step = m[1]?.toLowerCase();
+        if (step && (names.has(`color-${step}`) || names.has(step)))
           continue;
         offSystemCount++;
         if (offSystem.length < 100)
@@ -4621,15 +4632,16 @@ function usage(root, files, view, defs) {
       }
     });
   }
-  for (let pass = 0;pass < 3; pass++)
-    for (const [n, modes] of Object.entries(view.tokens)) {
-      if (!refs[n])
-        continue;
-      for (const v of Object.values(modes))
-        for (const m of v.matchAll(/var\(\s*--([\w-]+)/g))
-          if (names.has(m[1]) && refs[m[1]] === 0)
-            refs[m[1]] = refs[n];
-    }
+  const queue = Object.keys(refs).filter((n) => refs[n]);
+  while (queue.length) {
+    const n = queue.pop();
+    for (const v of Object.values(view.tokens[n] ?? {}))
+      for (const m of v.matchAll(/var\(\s*--([\w-]+)/g))
+        if (names.has(m[1]) && refs[m[1]] === 0) {
+          refs[m[1]] = refs[n];
+          queue.push(m[1]);
+        }
+  }
   return { files: scanned, refs, raw, rawCount, offSystem, offSystemCount };
 }
 function pageOf(view, mode) {
@@ -4817,6 +4829,9 @@ function main(argv = process.argv.slice(2)) {
     if (!args.flags.has("no-usage"))
       view.usage = usage(dir, all, view, new Set(src.map((s) => s.path)));
     if (args.flags.has("json")) {
+      if (args.opts.out)
+        writeFileSync(args.opts.out, JSON.stringify(view, null, 2) + `
+`);
       process.stdout.write(JSON.stringify(view, null, 2) + `
 `);
       return;
