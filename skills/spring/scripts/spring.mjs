@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spring CLI, generated from github.com/somesh-ks/portfolio@c142cfc (src/lib/spring).
+// Spring CLI, generated from github.com/somesh-ks/portfolio@617a262 (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
 import { spawn } from "node:child_process";
@@ -2633,6 +2633,7 @@ function checkColor(p, findings) {
   dupesAndSprawl(p, findings);
 }
 var HUE_WORD = /(^|-)(red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose|gray|grey|slate|zinc)(-|$)/i;
+var seeThrough = (css) => /^#([0-9a-f]{4}|[0-9a-f]{8})$/i.test(css.trim()) || /\/\s*(0?\.\d+|[1-9]?\d(\.\d+)?%)\s*\)\s*$/.test(css);
 function dupesAndSprawl(p, findings) {
   const roles = p.colors.filter((c) => !isScaleStep(c.name) && !isOn(c.name));
   const dupes = [];
@@ -2645,7 +2646,7 @@ function dupesAndSprawl(p, findings) {
     for (let j = i + 1;j < roles.length; j++) {
       const [a, b] = [roles[i], roles[j]];
       const [x, y] = [lab[i], lab[j]];
-      if (a.hex !== b.hex && Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]) < 0.005)
+      if (seeThrough(a.css) === seeThrough(b.css) && a.hex !== b.hex && Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]) < 0.005)
         dupes.push(`${a.name} ≈ ${b.name}`);
     }
   if (dupes.length)
