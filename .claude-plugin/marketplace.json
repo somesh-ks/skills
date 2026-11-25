@@ -61,6 +61,32 @@
         "ios",
         "android"
       ]
+    },
+    {
+      "name": "spring",
+      "description": "Shows a repo's design system as a visual page (colors per theme, contrast pairs, usage, raw literals) and generates a new one from a brand color with exact OKLCH color and type math, using an offline script.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/spring"
+      ],
+      "author": {
+        "name": "somesh-ks"
+      },
+      "homepage": "https://someshks.com/spring",
+      "repository": "https://github.com/somesh-ks/skills",
+      "license": "MIT",
+      "category": "design",
+      "keywords": [
+        "design-systems",
+        "design-tokens",
+        "color",
+        "oklch",
+        "tailwind",
+        "shadcn",
+        "contrast",
+        "dtcg"
+      ]
     }
   ]
 }

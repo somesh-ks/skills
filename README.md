@@ -2,7 +2,7 @@
 
 Agent skills for design engineering. They follow the open [Agent Skills](https://agentskills.io) format, so they work in Claude Code, Cursor, Codex, Gemini CLI, and other agents that read `SKILL.md`.
 
-Four skills in two pairs. The model loads `design-eng` and `design-sys` on its own when a task needs them; you run `sk-design-eng` and `sk-design-sys` yourself.
+Five skills: two pairs and one tool. The model loads `design-eng`, `design-sys` and `spring` on its own when a task needs them; you run `sk-design-eng` and `sk-design-sys` yourself.
 
 | Skill | Invoked by | What it does |
 | --- | --- | --- |
@@ -10,6 +10,7 @@ Four skills in two pairs. The model loads `design-eng` and `design-sys` on its o
 | `design-sys` | the model | Platform-neutral design system values with the reason and a source |
 | `sk-design-eng` | you | Audits UI code for the traps `design-eng` fixes |
 | `sk-design-sys` | you | Scores a design system against an 18-domain rubric, or builds one |
+| `spring` | the model | Shows a repo's design system as a page, or generates one from a brand color, with a zero-dependency script |
 
 Renamed on 2026-11-23: `interface-mechanics` is now `design-eng`, and `sk-interface-audit` is now `sk-design-eng`. The old names stay as stubs that point to the new ones, and the Claude Code plugin keeps the name `interface-mechanics` so existing installs update in place.
 
@@ -120,6 +121,22 @@ Claude Code, as a plugin: `/plugin install design-sys@somesh-ks`.
 ```
 
 `build` asks once for platforms, brand color, typeface, density and modes, drafts a three-tier token set, then audits its own draft.
+
+## spring
+
+Reads a repo's design system and shows it, or builds a new one. A zero-dependency Node script does the color and contrast math, so the agent reports numbers it did not guess. It sends nothing over the network.
+
+```bash
+npx skills add somesh-ks/skills --skill spring
+```
+
+Claude Code, as a plugin: `/plugin install spring@somesh-ks`.
+
+- **Show.** "Show me this project's design system" scans CSS variables per theme, DTCG and Tailwind config, and returns a link to [someshks.com/spring/view](https://someshks.com/spring/view) with colors, contrast pairs, type, and `path:line` for raw colors and off-system classes. The tokens travel in the link's `#` fragment, not to a server.
+- **Make.** "Make tokens from #e11d48 with Geist" writes CSS variables, DTCG `tokens.json`, a Tailwind v4 theme with shadcn variable names, `DESIGN.md` and an agent skill.
+- **Rebuild.** Infers the closest clean system from a messy one, then you migrate with the scan's line list.
+
+It counts and measures; it does not grade. For a rubric score use `sk-design-sys`.
 
 ## Evals
 
