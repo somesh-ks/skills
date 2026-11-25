@@ -13,18 +13,18 @@ Contents:
 
 ## Circular reveal with the View Transition API
 
-Expands the new state from the click point instead of crossfading, which is what makes a theme toggle feel physical. Skip it when the user prefers reduced motion. The Web Animations API `easing` option does not resolve `var()`, so the sample reads the easing token from the root.
+Expands the new state from the click point instead of crossfading, which is what makes a theme toggle feel physical. Skip it when the user prefers reduced motion, and when the resolved theme does not change. The Web Animations API `easing` option does not resolve `var()`, so the sample reads the easing token from the root.
 
 ```javascript
 const token = (name, fallback) => getComputedStyle(document.documentElement).getPropertyValue(name).trim() || fallback;
 
-export function toggleThemeWithTransition(event) {
-  const toggle = () => document.documentElement.classList.toggle('dark');
+export function toggleThemeWithTransition(event, toggle = () => document.documentElement.classList.toggle('dark')) {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!document.startViewTransition || reduce) return toggle();
 
-  const x = event?.clientX ?? innerWidth / 2;
-  const y = event?.clientY ?? innerHeight / 2;
+  const fromPointer = event?.detail > 0; // keyboard clicks report 0,0
+  const x = fromPointer ? event.clientX : innerWidth / 2;
+  const y = fromPointer ? event.clientY : innerHeight / 2;
   const endRadius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
 
   const transition = document.startViewTransition(toggle);
@@ -44,6 +44,22 @@ export function toggleThemeWithTransition(event) {
   mix-blend-mode: normal;
 }
 ```
+
+A menu with a System option needs one more guard: picking System while the OS already matches the current theme, or re-picking the active theme, changes nothing on screen, and a transition there reads as a glitch. Compare the look the pick resolves to with the look on screen, and animate only when they differ.
+
+```javascript
+const resolve = (pick) => pick === 'system'
+  ? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  : pick;
+
+// shown: the resolved theme now on screen ('light' or 'dark'); undefined before the theme library mounts
+export function pickTheme(pick, shown, apply, event) {
+  if (!shown || resolve(pick) === shown) return apply(pick); // same look, or unknown: no transition
+  toggleThemeWithTransition(event, () => apply(pick));
+}
+```
+
+`toggleThemeWithTransition` takes the apply step as its second argument in place of the class toggle. The view transition snapshots the page when that step returns, so it must change the DOM synchronously. With next-themes, pass `resolvedTheme` as `shown` and `(p) => flushSync(() => setTheme(p))` as `apply` (`flushSync` from `react-dom`); a bare `setTheme` updates the class later and the reveal animates two identical snapshots.
 
 **Support:** Chrome 111+, Edge 111+, Safari 18+, Firefox 144+.
 **Source:** [Chrome for Developers: same-document view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/same-document), [MDN: View Transition API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API)
