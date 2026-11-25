@@ -48,3 +48,4 @@ Fix them. End the reply with a short **Values** list: one line per value you set
 - The project's own tokens and platform conventions win. These values are starting points and floors.
 - Give pt for Apple platforms, dp for Android, CSS px for the web. 1pt = 1dp = 1 CSS px at 1x.
 - For code that applies a value in CSS, point to `design-eng` and its section rather than writing a mechanism from memory.
+- To generate a whole system from a brand color, or to show a repo's existing tokens as a page, use the `spring` skill and its script rather than writing scales by hand.
