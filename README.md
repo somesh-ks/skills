@@ -11,6 +11,14 @@ Four skills in two pairs. The model loads `design-eng` and `design-sys` on its o
 | `sk-design-eng` | you | Audits UI code for the traps `design-eng` fixes |
 | `sk-design-sys` | you | Scores a design system against an 18-domain rubric, or builds one |
 
+Install them all with the [skills CLI](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add somesh-ks/skills
+```
+
+Or pick one pair with `--skill`, as below.
+
 Renamed on 2026-11-23: `interface-mechanics` is now `design-eng`, and `sk-interface-audit` is now `sk-design-eng`. The old names stay as stubs that point to the new ones, and the Claude Code plugin keeps the name `interface-mechanics` so existing installs update in place. On 2026-11-25 `spring` folded into `design-sys` (its scan) and the [Spring app](https://someshks.com/spring/app) (creating a system); `spring` stays as a stub.
 
 ## design-eng
