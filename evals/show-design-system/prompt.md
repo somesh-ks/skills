@@ -1,7 +1,7 @@
 ---
 name: show-design-system
-tags: [spring, show]
-plugins: [../../skills/spring]
+tags: [sys, show]
+plugins: [../../skills/design-sys]
 max_turns: 14
 allowed_tools: [Read, Glob, Grep, Skill, Bash, Write]
 ---

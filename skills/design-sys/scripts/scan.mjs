@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spring CLI, generated from github.com/somesh-ks/portfolio@c7e6fa9 (src/lib/spring).
+// Spring scan, generated from github.com/somesh-ks/portfolio@41d8dfb (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
 import { lstatSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -3953,7 +3953,9 @@ function themeOf(ctx) {
   for (const p of parts) {
     const m = p.match(/^(?:html|:root|body|:host)?\[data-(?:theme|mode|color-scheme|bs-theme)\s*=\s*["']?([\w-]+)["']?\]$/i) ?? p.match(/^(?:html|:root|body)?\.theme-([\w-]+)$/i);
     if (m)
-      return { mode: m[1].toLowerCase() === "light" ? "light" : m[1].toLowerCase() };
+      return {
+        mode: m[1].toLowerCase() === "light" ? "light" : m[1].toLowerCase()
+      };
     if (/^(?:html|:root)?\.light$/i.test(p))
       return { mode: "light" };
   }
@@ -4280,7 +4282,12 @@ function kindOf(path, text) {
   return /--[\w-]+\s*:/.test(t) ? "css" : null;
 }
 function extract(files, name) {
-  const acc = { modes: new Set, tokens: new Map, scoped: new Map, notes: [] };
+  const acc = {
+    modes: new Set,
+    tokens: new Map,
+    scoped: new Map,
+    notes: []
+  };
   const sources = [];
   for (const f of files) {
     const k = kindOf(f.path, f.text);
@@ -4445,6 +4452,33 @@ function pairs(names) {
         add(n, base);
     }
   }
+  const textOf = (n) => {
+    const m = n.match(/^(.+?)-(fg|foreground|text)(-(muted|subtle|secondary|placeholder))?$/);
+    if (m)
+      return m[1];
+    const b = n.match(/^(.+)-muted$/)?.[1];
+    const sib = (s) => has.has(`${b}-${s}`);
+    return b && (sib("fg") || sib("text") || sib("foreground")) && !sib("subtle") ? b : undefined;
+  };
+  for (const n of names) {
+    const base = textOf(n);
+    if (!base || /^(color-)?(bg|background|surface|text|fg)$/.test(base))
+      continue;
+    for (const bg of ["bg", "background", "surface"])
+      add(n, `${base}-${bg}`);
+  }
+  const TEXT = /^(color-)?((text|fg|ink|foreground)(-(muted|subtle|secondary|tertiary|placeholder|faint|soft))?|(muted|secondary|subtle)-(text|foreground|fg))$/;
+  const PAGE = /^(color-)?(bg|background|surface|canvas|page|card|panel)(-(subtle|raised|alt))?$/;
+  const ownText = (bg) => ["foreground", "fg"].some((s) => has.has(`${bg}-${s}`)) || has.has(bg.replace(/^(color-)?/, "$1on-"));
+  const texts = names.filter((n) => TEXT.test(n));
+  const pages = names.filter((n) => PAGE.test(n) && !ownText(n));
+  for (const fg of texts)
+    for (const bg of pages)
+      if (fg.startsWith("color-") === bg.startsWith("color-"))
+        add(fg, bg);
+  const uniq = [...new Map(out.map((p) => [key(p), p])).values()];
+  out.length = 0;
+  out.push(...uniq);
   const seen = new Set(out.map(key));
   return out.filter((p) => !(p.fg.startsWith("color-") && p.bg.startsWith("color-") && seen.has(key({ fg: p.fg.slice(6), bg: p.bg.slice(6) }))));
 }
@@ -4712,7 +4746,7 @@ function summary(view, dir, link, file) {
   if (ps.length) {
     const low = ps.filter((p) => p.ratio !== null && p.ratio < 4.5);
     const unread = ps.filter((p) => p.ratio === null).length;
-    lines.push(`Contrast: ${ps.length} named text/background pairs; ${low.length} under 4.5:1` + (low.length ? `: ${list(low.map((p) => `${p.fg} on ${p.bg} (${p.mode}) ${p.ratio}`), 6)}` : "") + (unread ? `; ${unread} not computed here (color-mix or unresolved; the view resolves them)` : ""));
+    lines.push(`Contrast: ${ps.length} pairs found by token name (colors combined only in component code aren't checked); ${low.length} under 4.5:1` + (low.length ? `: ${list(low.map((p) => `${p.fg} on ${p.bg} (${p.mode}) ${p.ratio}`), 6)}` : "") + (unread ? `; ${unread} not computed here (color-mix or unresolved; the view resolves them)` : ""));
   }
   const u = view.usage;
   if (u) {
@@ -4815,6 +4849,8 @@ function fail(msg) {
   console.error(msg);
   process.exit(1);
 }
+var SCAN_HELP = `spring scan [dir] [--json] [--out file] [--no-usage]
+spring schema view`;
 var HELP = `spring scan [dir] [--json] [--out file] [--no-usage]
 spring build [spring.json] [--primary color] [--name n] [--font f] [--heading f] [--mono f]
              [--contrast aa|aaa|apca] [--styling tailwind|css] [--out dir] [--only a,b] [--print file]
@@ -4847,6 +4883,16 @@ function main(argv = process.argv.slice(2)) {
 `);
     }
     say(summary(view, dir, fits ? link : null, file));
+    return;
+  }
+  if (true) {
+    if (cmd === "schema")
+      process.stdout.write(JSON.stringify(view_schema_default, null, 2) + `
+`);
+    else
+      say(SCAN_HELP);
+    if (cmd && !["help", "--help", "schema"].includes(cmd))
+      process.exit(1);
     return;
   }
   if (cmd === "infer") {

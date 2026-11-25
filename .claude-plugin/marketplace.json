@@ -38,7 +38,7 @@
     },
     {
       "name": "design-sys",
-      "description": "Platform-neutral design system values with the reason and a source (hairlines, per-platform type and target sizes, color roles, tokens and DTCG, component principles, dark mode elevation, fluid type, translation room), plus a design system audit and builder.",
+      "description": "Platform-neutral design system values with the reason and a source (hairlines, per-platform type and target sizes, color roles, tokens and DTCG, component principles, dark mode elevation, fluid type, translation room), an offline scan that shows a repo's tokens as a page, plus a design system audit and builder.",
       "source": "./",
       "strict": false,
       "skills": [
@@ -60,11 +60,12 @@
         "dark-mode",
         "ios",
         "android"
-      ]
+      ],
+      "homepage": "https://someshks.com/spring"
     },
     {
       "name": "spring",
-      "description": "Shows a repo's design system as a visual page (colors per theme, contrast pairs, usage, raw literals) and generates a new one from a brand color with exact OKLCH color and type math, using an offline script.",
+      "description": "Moved into design-sys. This plugin keeps only a stub that points there.",
       "source": "./",
       "strict": false,
       "skills": [
@@ -78,14 +79,7 @@
       "license": "MIT",
       "category": "design",
       "keywords": [
-        "design-systems",
-        "design-tokens",
-        "color",
-        "oklch",
-        "tailwind",
-        "shadcn",
-        "contrast",
-        "dtcg"
+        "design-systems"
       ]
     }
   ]
