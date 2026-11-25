@@ -1,6 +1,6 @@
 ---
 name: design-eng
-description: "Verified CSS, DOM, motion, performance, and accessibility mechanics, each with browser support and a source. Use proactively whenever you write or change web UI code for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, buttons that shift when a spinner swaps in, wobbling spinners, fluid type with clamp(), formatting money or prices in any currency, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and UI code review. Not for visual style, palettes, layout taste, copy, deciding whether to animate, or platform-neutral values such as hairline weight and per-platform sizes (use design-sys)."
+description: "Verified CSS, DOM, motion, performance and accessibility mechanics with browser support and a source. Use proactively whenever you write or change web UI for a tab bar, nav, dropdown, menu, tooltip, popover, dialog, drawer, toast, command palette, toggle, a floating button or sticky bar, a button with a loading spinner or icon, hover states, drag, scroll effects, a dark mode or theme toggle, or any transition or animation, even when the user names no technique. Also use for named traps: hover flicker or dead zones, tooltip clipping, height auto animation, @starting-style, view transitions, FLIP, buttons that shift when a spinner swaps in, wobbling spinners, fluid type with clamp(), formatting money or prices in any currency, theme switch smear, 100vh on mobile, iOS input zoom, inert and focus, forced colors, blur cost, and UI code review. Not for visual style, palettes, layout taste, copy, deciding whether to animate, or platform-neutral values such as hairline weight and per-platform sizes (use design-sys)."
 license: MIT
 metadata:
   author: somesh-ks
@@ -25,9 +25,11 @@ When the component you are writing has a row in the table, load that file and ap
 - Siblings with hover or click spaced by `gap`: the pointer falls into dead zones. `dom-input.md` › Hit areas with no dead zones.
 - A button that swaps its label for a spinner or adds an icon: its size jumps. `components.md` › Buttons that keep their size.
 - A theme toggle on a page with color transitions: every color smears at once. `color.md` › Theme switch without a transition smear.
+- A theme menu with a System option and a view transition: picks that change nothing still animate. `dom-transitions.md` › Circular reveal with the View Transition API.
 - A conditional render with an enter animation: it pops out with no exit. `css-animation.md` › Enter and exit through display: none and the top layer.
 - A tooltip or popover placed with static offsets: it clips at the viewport edge. `css-animation.md` › Tooltips that flip on clipping.
 - A full-height layout on `100vh`, or an input under 16px: cut off or zoomed on phones. `mobile.md`.
+- A fixed floating button or sticky bar: it hides on scroll and stays gone, or sits on top of other controls. `mobile.md` › Floating controls that never vanish or cover content.
 
 Fix them in the code. End the reply with a short **Mechanics** list: one line per trap you fixed, with its Support and Source lines. Skip traps that do not apply.
 
@@ -44,7 +46,7 @@ Fix them in the code. End the reply with a short **Mechanics** list: one line pe
 | Fluid type with clamp() that survives zoom, container units, font metric overrides, full-bleed grid, @scope, optical sizing and weight transitions, text-box icon anchoring, custom string truncation, descender-safe underlines, anchor scroll offset, macOS font smoothing, tabular numbers | `references/typography.md` |
 | light-dark(), theme switch without a smear, relative color, perceptual gradient interpolation (oklab/oklch), SVG noise and grain tiles, color-mix overlays, P3, plus-lighter, contrast-color() | `references/color.md` |
 | inert with focus restore, focus rings, reduced motion, sr-only, live announcements, forced colors | `references/accessibility.md` |
-| Tap highlight, touch-action, rubber-band overscroll canvas, dvh, safe area, input zoom, scrollbars | `references/mobile.md` |
+| Tap highlight, touch-action, rubber-band overscroll canvas, dvh, safe area, input zoom, scrollbars, floating buttons and sticky bars | `references/mobile.md` |
 | Currency decimals per currency, minor units | `references/numbers.md` |
 | Slot and asChild, controlled plus uncontrolled state, tabs with ARIA, distance-aware tab motion, dropdown sizing and truncation, optical padding for icon buttons, buttons that keep their size across loading, icon, and label states, character limits | `references/components.md` |
 

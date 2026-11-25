@@ -1,6 +1,6 @@
 # Mobile and touch mechanics
 
-Load when: a web app should feel native on a phone, taps flash gray, document canvas reveals during overscroll, text gets selected while scrubbing, a drawer scrolls the page behind it, the page zooms when an input is focused, or `100vh` overflows behind browser chrome.
+Load when: a web app should feel native on a phone, taps flash gray, document canvas reveals during overscroll, text gets selected while scrubbing, a drawer scrolls the page behind it, the page zooms when an input is focused, `100vh` overflows behind browser chrome, or a floating button or sticky bar covers content or disappears.
 Support lines verified against MDN on 2026-09-10.
 
 Contents:
@@ -9,6 +9,7 @@ Contents:
 - Stop iOS zooming into inputs
 - Scrollbars that do not look like 2005
 - Document canvas background for rubber-band overscroll
+- Floating controls that never vanish or cover content
 
 ## Native feel in a browser tab
 
@@ -123,3 +124,50 @@ Setting `background-color` on `html` guarantees that elastic overscroll, pull-to
 **Support:** Canvas background via `html` is Baseline widely available. `<meta name="theme-color">` is supported in Chromium browsers and Android; Safari 26 supports it for installed web apps; Firefox does not support it.
 **Source:** [W3C CSS Backgrounds: Canvas Backgrounds](https://www.w3.org/TR/css-backgrounds-3/#special-backgrounds), [MDN: theme-color](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/theme-color)
 
+## Floating controls that never vanish or cover content
+
+A fixed button or bar (floating action, chat bubble, sticky call to action) that hides on scroll is gone exactly when people look for it, and a hide flag tied to other state often never resets. Keep it visible and solve the collision with layout: any row of controls that can scroll under the button reserves the button's width at its end, so the two never stack, and focused elements stop short of it.
+
+```css
+:root {
+  --fab-size: 3rem;
+  --fab-gap: 1rem;
+  --fab-room: calc(var(--fab-size) + 2 * var(--fab-gap));
+}
+
+.fab {
+  position: fixed;
+  inline-size: var(--fab-size);
+  block-size: var(--fab-size);
+  inset-inline-end: var(--fab-gap);
+  inset-block-end: calc(var(--fab-gap) + env(safe-area-inset-bottom));
+}
+
+/* a control row that can pass under the corner keeps its end clear */
+@media (max-width: 40rem) {
+  .control-row { padding-inline-end: var(--fab-room); }
+}
+
+/* focused or scrolled-to elements stop above the button */
+html { scroll-padding-block-end: calc(var(--fab-room) + env(safe-area-inset-bottom)); }
+```
+
+If the button must step aside over one region instead, watch only the band the button occupies, not the whole viewport, and show it again on the next callback that reports no overlap:
+
+```javascript
+export function stepAsideOver(region, fab) {
+  const band = fab.getBoundingClientRect().height + 32; // the button plus its gap, in px
+  const io = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting && fab.contains(document.activeElement)) return; // never hide the focused control
+    fab.inert = entry.isIntersecting;
+    fab.toggleAttribute('data-aside', entry.isIntersecting); // style: opacity 0, no pointer events
+  }, { rootMargin: `-${Math.max(0, innerHeight - band)}px 0px 0px 0px` }); // root = bottom band only
+  io.observe(region);
+  return () => io.disconnect();
+}
+```
+
+`rootMargin` takes px or %, not rem or calc(). Re-create the observer when the viewport height changes.
+
+**Support:** `env()`, logical properties and `scroll-padding` are Baseline widely available; `IntersectionObserver` with `rootMargin` and `inert` are Baseline widely available.
+**Source:** [WCAG 2.2: Focus Not Obscured (Minimum) 2.4.11](https://www.w3.org/WAI/WCAG22/Understanding/focus-not-obscured-minimum.html), [MDN: scroll-padding](https://developer.mozilla.org/en-US/docs/Web/CSS/scroll-padding), [MDN: IntersectionObserver rootMargin](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin)
