@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spring CLI, generated from github.com/somesh-ks/portfolio@d649afd (src/lib/spring).
+// Spring CLI, generated from github.com/somesh-ks/portfolio@9903122 (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
 import { lstatSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -1534,9 +1534,9 @@ function check(id, title, value, ok, warn = false) {
 }
 function buildCharts(keys, scales, neutral, pages, ramps = {}) {
   const at = (i) => i !== undefined && keys[i] ? keys[i] : undefined;
-  const seq = at(ramps.seq ?? 0);
-  const a = at(ramps.div?.[0] ?? 0);
-  const b = at(ramps.div?.[1] ?? 1);
+  const seq = at(ramps.seq) ?? at(0);
+  const a = at(ramps.div?.[0]) ?? at(0);
+  const b = at(ramps.div?.[1]) ?? at(1);
   const div = a && b && a !== b ? [a, b] : undefined;
   const out = {
     keys,
