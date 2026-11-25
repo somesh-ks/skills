@@ -1,6 +1,6 @@
 # Motion techniques
 
-Load when: an animation must be interruptible or retargetable mid-flight, progress should follow scroll, icons morph between shapes or swap on a state change, layers need promoting for the duration of an interaction, items enter with a stagger, or numbers roll like an odometer.
+Load when: an animation must be interruptible or retargetable mid-flight, progress should follow scroll, icons morph between shapes or swap on a state change, a spinner wobbles instead of turning on its center, layers need promoting for the duration of an interaction, items enter with a stagger, or numbers roll like an odometer.
 Whether and how much to animate is a design decision; this file holds mechanisms only. Motion samples use the `--ease-out` and `--ease-in-out` tokens and durations from the Default tokens section of `SKILL.md`; a project's own tokens win over both.
 Support lines verified against MDN on 2026-09-10; the icon swap entry on 2026-10-10.
 
@@ -149,6 +149,41 @@ With Motion, key a `motion.span` inside `<AnimatePresence initial={false} mode="
 
 **Support:** The individual `scale` property is Baseline widely available (across browsers since August 2022). Tailwind 4 `scale-*` utilities write `scale`; Tailwind 3 writes `transform`, so name that in the transition.
 **Source:** [MDN: scale](https://developer.mozilla.org/en-US/docs/Web/CSS/scale)
+
+## Spinners that rotate on their own center
+
+A spinner turns around the center of the box that carries the animation, not the center of the drawing. When the two differ, the arc orbits a nearby point and wobbles on every turn. Look for three causes:
+
+- **An inline wrapper spins.** In `<span class="spin"><svg/></span>`, an `inline-block` span gets its height from the line box, so it is taller than the icon and its center sits a pixel or more below the icon's. The same happens to an inline `<svg>` with an `inline-block` parent. Measured in Chromium: a 15px icon in a span with a 20px line height orbits a circle about 6px across.
+- **A shape inside the SVG spins.** A `<path>` or `<g>` rotates around its `transform-box`. `transform-origin: center` with `transform-box: fill-box` uses the shape's bounding box, which is centerd on the circle only when the arc covers three sides; a quarter arc orbits by several pixels. Name the circle's center in user units instead.
+- **An icon font spins.** A glyph sits on the baseline inside its em box, not in its middle. Use an SVG.
+
+```css
+/* Spin the icon box itself, and keep it out of the line box. */
+.spinner {
+  display: block;            /* or inline-grid on a wrapper that hugs the icon */
+  inline-size: 1rem;
+  block-size: 1rem;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Spinning a shape inside a 24 x 24 viewBox: rotate around the circle's center. */
+.spinner-arc {
+  transform-origin: 12px 12px;  /* the default transform-box, view-box, reads these as user units */
+}
+
+@keyframes spin { to { rotate: 1turn; } }
+
+/* A stopped spinner reads as a frozen page, so slow it instead of stopping it. */
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 2.4s; }
+}
+```
+
+Check it by pausing the animation at a few negative `animation-delay` values and comparing the icon's center between frames; a true spinner keeps the same center in every frame. Tailwind's preflight sets `svg { display: block }`, which hides the first cause until the icon sits inside an inline wrapper.
+
+**Support:** `transform-box` and the individual `rotate` property are Baseline widely available.
+**Source:** [MDN: transform-box](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-box), [MDN: transform-origin](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin)
 
 ## Promote a layer only while it can move
 

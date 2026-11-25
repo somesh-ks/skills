@@ -15,7 +15,10 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/interface-mechanics"
+        "./skills/design-eng",
+        "./skills/sk-design-eng",
+        "./skills/interface-mechanics",
+        "./skills/sk-interface-audit"
       ],
       "author": {
         "name": "somesh-ks"
@@ -31,6 +34,58 @@
         "accessibility",
         "performance",
         "design-engineering"
+      ]
+    },
+    {
+      "name": "design-sys",
+      "description": "Platform-neutral design system values with the reason and a source (hairlines, per-platform type and target sizes, color roles, tokens and DTCG, component principles, dark mode elevation, fluid type, translation room), plus a design system audit and builder.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/design-sys",
+        "./skills/sk-design-sys"
+      ],
+      "author": {
+        "name": "somesh-ks"
+      },
+      "repository": "https://github.com/somesh-ks/skills",
+      "license": "MIT",
+      "category": "design",
+      "keywords": [
+        "design-systems",
+        "design-tokens",
+        "typography",
+        "color",
+        "accessibility",
+        "dark-mode",
+        "ios",
+        "android"
+      ]
+    },
+    {
+      "name": "spring",
+      "description": "Shows a repo's design system as a visual page (colors per theme, contrast pairs, usage, raw literals) and generates a new one from a brand color with exact OKLCH color and type math, using an offline script.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/spring"
+      ],
+      "author": {
+        "name": "somesh-ks"
+      },
+      "homepage": "https://someshks.com/spring",
+      "repository": "https://github.com/somesh-ks/skills",
+      "license": "MIT",
+      "category": "design",
+      "keywords": [
+        "design-systems",
+        "design-tokens",
+        "color",
+        "oklch",
+        "tailwind",
+        "shadcn",
+        "contrast",
+        "dtcg"
       ]
     }
   ]

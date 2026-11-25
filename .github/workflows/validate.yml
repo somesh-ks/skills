@@ -32,3 +32,5 @@ jobs:
             sed -n '2,/^---$/p' "$skill" | grep -q '^description: ' || { echo "::error file=$skill::missing description"; exit 1; }
           done
           echo "OK"
+      - name: Check skill content
+        run: python3 scripts/check.py
