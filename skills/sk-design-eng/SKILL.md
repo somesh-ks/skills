@@ -36,7 +36,7 @@ Run both only when the user asks for both, and report them in separate sections.
 
 | Severity | Rule | Examples |
 | --- | --- | --- |
-| High | Someone is blocked or loses their place | Focus escapes a modal or vanishes on close, no visible focus, content clipped or unreachable on a phone, a drag that drops when the pointer leaves, a large motion effect with no reduced-motion path |
+| High | Someone is blocked or loses their place | Focus escapes a modal or vanishes on close, no visible focus, a label that disappears in one theme, content clipped or unreachable on a phone, a drag that drops when the pointer leaves, a large motion effect with no reduced-motion path |
 | Medium | A visible glitch on a path people use | Hover flicker, a button that changes size, a theme smear, a pop-out with no exit, layout shift, jank while scrolling, iOS zoom on focus |
 | Low | Cost or polish most people will not notice | A permanent `will-change`, duplicated dark colors, jittering digits on a secondary screen, a tap flash |
 
@@ -53,7 +53,7 @@ path:line · Severity · signal · what breaks, for whom · fix: <file>.md › <
 - `path:line` is the first line of the problem. Several lines in one file for the same signal stay one finding: `src/nav.tsx:12,18,31`.
 - Severity is the bare word High, Medium or Low. When a finding was raised for sitting on the main path, say so at the end of "what breaks" ("…, on the primary nav"), not beside the severity.
 - "What breaks" names the effect a person sees, not the rule: "hover drops between tabs", not "uses gap".
-- The fix is the pointer to the `design-eng` reference and section that holds the technique, plus at most a short code hint in parentheses; the line ends there. Load that file when you apply it. Under the findings, list each technique used once, with its Support and Source lines.
+- The fix is the pointer to the `design-eng` reference and section that holds the technique, plus at most a short code hint in parentheses; the line ends there. Load that file when you apply it. Under the findings, list each technique used once, with its Support and Source lines. When the signal's Fix column names no reference file, write that fix in words and end it with `· principle`, so the reader knows no `design-eng` section backs it.
 
 ## Report
 
