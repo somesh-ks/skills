@@ -100,6 +100,9 @@ Contents:
 ## Themes and modes
 
 - Components consume semantic tokens only, so modes swap without component changes.
+- Every fill role has a text role (`primary` and `primary-foreground`), and each theme overrides the two together.
+- Every fill and text pair passes in every theme: 4.5:1 for text, 3:1 for large text and icons.
+- Filled components set their label colour themselves instead of inheriting it.
 - Dark is tuned, not inverted: accents desaturated, body text dimmer. Fix: `depth.md` › Dark accents and dark body text.
 - Increased contrast has a value per appearance. Fix: `color-values.md` › Increased contrast is a variant per appearance.
 - White images are softened in dark mode. Fix: `depth.md` › Soften white images in dark mode.
