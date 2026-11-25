@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Spring CLI, generated from github.com/somesh-ks/portfolio@f5da7de (src/lib/spring).
+// Spring CLI, generated from github.com/somesh-ks/portfolio@ef90140 (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
 import { lstatSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -4644,6 +4644,7 @@ function usage(root, files, view, defs) {
   }
   return { files: scanned, refs, raw, rawCount, offSystem, offSystemCount };
 }
+var opaque = (c) => over(c, "#000000") === over(c, "#ffffff");
 function pageOf(view, mode) {
   for (const n of [
     "background",
@@ -4655,9 +4656,10 @@ function pageOf(view, mode) {
     "canvas",
     "page"
   ]) {
-    const c = colorOf(resolve(view, n, mode) ?? "");
-    if (c)
-      return c;
+    const v = resolve(view, n, mode);
+    if (v === undefined)
+      continue;
+    return colorOf(v) ?? null;
   }
   return /dark/.test(mode) ? "#000000" : "#ffffff";
 }
@@ -4668,11 +4670,11 @@ function contrastPairs(view) {
     for (const { fg, bg } of pairs(Object.keys(view.tokens))) {
       const b = colorOf(resolve(view, bg, mode) ?? "");
       const f = colorOf(resolve(view, fg, mode) ?? "");
-      if (!b || !f) {
+      if (!b || !f || page === null && !(opaque(b) && opaque(f))) {
         out.push({ fg, bg, mode, ratio: null });
         continue;
       }
-      const solidBg = over(b, page);
+      const solidBg = over(b, page ?? "#ffffff");
       out.push({
         fg,
         bg,
