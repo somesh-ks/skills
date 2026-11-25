@@ -9,16 +9,16 @@ metadata:
 
 # Spring
 
-`scripts/spring.mjs` is Spring's engine as one Node 18+ script with no dependencies. It reads files and prints; it sends nothing over the network. The web app is https://someshks.com/spring and the viewer is https://someshks.com/spring/view.
+`scripts/spring.mjs` is Spring's engine as one Node 18+ script with no dependencies. It reads files and prints; it sends nothing over the network. The web app is https://someshks.com/spring/app and the viewer is https://someshks.com/spring/view.
 
 Run it with the path to this skill, for example `node <skill-dir>/scripts/spring.mjs scan .`.
 
 ## Show a repo's design system
 
-1. Run `node <skill-dir>/scripts/spring.mjs scan <repo>`. Add `--json` to read the full token map yourself.
+1. Run `node <skill-dir>/scripts/spring.mjs scan <repo>`. Add `--json` to read the full token map and findings yourself, or `--open` to open the View link in the user's browser.
 2. Give the user the `View:` link. It opens a page with every color per theme, contrast pairs, type, space, radius, shadows and usage. The tokens travel in the link's `#` fragment, so the page's server never receives them. When the link would be too long, the script saves a JSON file instead: tell the user to open /spring/view and drop that file on it.
 3. If you have a browser tool or Playwright, open the link and take a screenshot to check it rendered and to show it in the reply.
-4. Report the facts the summary printed, briefly: sources, themes, token counts, pairs under 4.5:1, never-referenced tokens, color literals and off-system classes with their `path:line`. They are counts, not a grade. Say what the script could not read (its `Note:` lines), such as a Tailwind config that uses code.
+4. Report the facts the summary printed, briefly: sources, themes, token counts, pairs under 4.5:1, never-referenced tokens, color literals and off-system classes with their `path:line`, and the findings (each fail or warning, and how many checks pass). They are counts, not a grade: never invent one. Say what the script could not read (its `Note:` lines), such as a Tailwind config that uses code.
 
 Read the token files yourself only to answer a question the summary doesn't cover. Never invent a value the script didn't print.
 

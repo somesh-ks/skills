@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// Spring CLI, generated from github.com/somesh-ks/portfolio@c7e6fa9 (src/lib/spring).
+// Spring CLI, generated from github.com/somesh-ks/portfolio@c142cfc (src/lib/spring).
 // Don't edit: rebuild with `bun scripts/build-spring-cli.ts`. No dependencies; reads files only.
 // src/lib/spring/cli.ts
+import { spawn } from "node:child_process";
 import { lstatSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, relative, resolve as resolvePath, dirname, basename } from "node:path";
@@ -1970,7 +1971,7 @@ function solidStep(scale, mode, fg, m) {
 }
 function buildRoles(scales, mode, labels, solid, custom) {
   const at = (scale) => solid[scale][mode];
-  const hover = (scale) => at(scale) + towardContrast(labels[scale][mode], mode);
+  const hover = (scale, n = 1) => Math.min(12, Math.max(1, at(scale) + n * towardContrast(labels[scale][mode], mode)));
   const r = (name, scale, step, job) => {
     const s = get(scales, scale, mode, step);
     return { name, hex: s.hex, css: s.css, from: `${scale}.${step}`, job };
@@ -1992,12 +1993,16 @@ function buildRoles(scales, mode, labels, solid, custom) {
     r("text", "neutral", 12, "Body and heading text"),
     r("primary", "primary", at("primary"), "Primary action, one per view"),
     r("primary-hover", "primary", hover("primary"), "Hovered primary action"),
+    r("primary-active", "primary", hover("primary", 2), "Pressed primary action"),
     on("primary-fg", "primary", "Text and icons on primary"),
     r("primary-subtle", "primary", 3, "Selected rows, soft badges"),
     r("primary-subtle-hover", "primary", 4, "Hovered soft primary"),
+    r("selected", "primary", 4, "Selected rows, tabs and options"),
     r("primary-border", "primary", 7, "Borders of primary-subtle elements"),
     r("primary-text", "primary", 11, "Links and primary text on bg"),
-    r("ring", "primary", at("primary"), "Focus ring")
+    r("ring", "primary", at("primary"), "Focus ring"),
+    r("disabled", "neutral", 3, "Disabled control fill"),
+    r("disabled-text", "neutral", 8, "Disabled label; exempt from contrast (WCAG 1.4.3)")
   ];
   for (const s of Object.keys(STATUS_HUES)) {
     roles.push(r(s, s, at(s), `Solid ${s} fill`), on(`${s}-fg`, s, `Text on ${s}`), r(`${s}-subtle`, s, 3, `Soft ${s} background`), r(`${s}-text`, s, 11, `${s[0].toUpperCase() + s.slice(1)} text on bg`));
@@ -2015,6 +2020,7 @@ var BASE_PAIRS = [
   ["text-muted", "fill", "text", "Placeholders in inputs"],
   ["primary-fg", "primary", "text", "Primary button label"],
   ["primary-fg", "primary-hover", "text", "Hovered primary button label"],
+  ["primary-fg", "primary-active", "text", "Pressed primary button label"],
   ["primary-text", "bg", "text", "Links"],
   ["primary-text", "primary-subtle", "text", "Text in soft primary badges"],
   ["ring", "bg", "ui", "Focus ring is visible (WCAG 2.4.13)"],
@@ -2520,7 +2526,7 @@ function parseSystem(text) {
   return f === "design.md" ? parseDesignMd(text) : parseCss2(text);
 }
 var TEXT = /(^|-)(text|foreground|fg|ink|content|link|placeholder|on-[\w-]+)(-|$)/i;
-var NOT_PAGE_TEXT = /(^on-|-on-|inverse|disabled|white|black|^text-(xs|sm|base|lg|\d?xl))/i;
+var NOT_PAGE_TEXT = /(^on-|-on-|inverse|disabled|white|black|^text-(xs|sm|base|lg|\d?xl)|(^|-)(border|divider|outline|shadow|illustration)(-|$))/i;
 var SURFACE = /^(bg|background|surface|canvas|paper|page|panel|card|popover|sidebar)(-(subtle|raised|elevated|sunken|alt|alternate|secondary|tertiary|default|base|inset|\d))?$/i;
 var NOT_SURFACE = /(-(fg|foreground|text|border|ring|hover|active|pressed)|inverse|overlay|scrim)$/i;
 var RING = /(^|-)(ring|focus|focus-ring|outline)$/i;
@@ -2597,8 +2603,8 @@ function checkColor(p, findings) {
       pair(c, own, 4.5, failing);
     if (RING.test(b)) {
       const scope = b.match(/^(.+)-(?:ring|focus|focus-ring|outline)$/)?.[1];
-      const home = scope ? by.get(scope) : undefined;
-      pair(c, home ?? bg, 3, rings);
+      const home = scope && !RING.test(scope) ? by.get(scope) : undefined;
+      pair(c, home && home !== c ? home : bg, 3, rings);
     }
   }
   findings.push(failing.length ? {
@@ -3295,6 +3301,7 @@ function toDesignMd(sys) {
     primary: "primary",
     "on-primary": "primary-fg",
     "primary-hover": "primary-hover",
+    "primary-active": "primary-active",
     "primary-subtle": "primary-subtle",
     "primary-text": "primary-text",
     neutral: "bg",
@@ -3348,6 +3355,7 @@ function toDesignMd(sys) {
       padding: px(sys.space.paddingX.md)
     },
     "button-primary-hover": { backgroundColor: "{colors.primary-hover}" },
+    "button-primary-active": { backgroundColor: "{colors.primary-active}" },
     "button-secondary": {
       backgroundColor: "{colors.fill}",
       textColor: "{colors.on-surface}",
@@ -3469,7 +3477,7 @@ Corners are ${isRound}: ${Object.entries(sys.shape.radius).filter(([k]) => k !==
 
 Built with **${comp.name}** (${comp.url}). Icons: **${icon.name}** only${icon.strokeAware ? `, ${stroke}px stroke to match ${T.body.weight} weight text` : ""}, sized to the text they sit beside (16px with body, 20px with h3). Styling: **${STYLING[sys.stack.styling].name}**.
 
-- **Primary button:** \`primary\` fill, \`primary-fg\` label, one per view.
+- **Primary button:** \`primary\` fill, \`primary-fg\` label, one per view; hover \`primary-hover\`, pressed \`primary-active\`, disabled \`disabled\` with \`disabled-text\` (exempt from contrast). Selected rows, tabs and options use \`selected\`.
 - **Secondary button:** \`fill\` with \`text\`; hover \`fill-hover\`, pressed \`fill-active\`.
 - **Input:** \`bg\` fill, \`border\` edge, \`border-strong\` on hover, \`ring\` on focus (2px, offset 2px); placeholder \`text-muted\`; error \`danger\` border with \`danger-text\` message.
 - **Card:** \`bg-subtle\`, \`border-subtle\` edge, \`lg\` radius, ${sys.space.gutter}px padding.
@@ -3621,6 +3629,22 @@ export function scale({ hue, chroma, l: target, bend = true }, mode = "light", c
 }
 `;
 }
+
+// src/lib/spring/params.ts
+var SEED_PARAMS = [
+  "primary",
+  "name",
+  "font",
+  "body",
+  "heading",
+  "mono",
+  "base",
+  "ratio",
+  "contrast",
+  "styling",
+  "building"
+];
+var SYSTEM_PARAMS = ["s", "j", ...SEED_PARAMS];
 
 // src/lib/spring/state.ts
 var b64url = {
@@ -3786,7 +3810,7 @@ function decodeInput(s) {
 
 // src/lib/spring/io.ts
 var SCHEMA_URL = "https://someshks.com/spring/schema.json";
-var SPRING_URL = "https://someshks.com/spring";
+var SPRING_URL = "https://someshks.com/spring/app";
 var isObj = (v) => !!v && typeof v === "object" && !Array.isArray(v);
 function withDefaults(raw) {
   const out = { ...DEFAULT_INPUT, ...raw, v: 1 };
@@ -4698,7 +4722,25 @@ function viewLink(view) {
   return `${VIEW_URL}#d=${deflateRawSync(Buffer.from(json)).toString("base64url")}`;
 }
 var list = (xs, max = 8) => xs.slice(0, max).join(", ") + (xs.length > max ? `, +${xs.length - max} more` : "");
-function summary(view, dir, link, file) {
+function findingsOf(view) {
+  try {
+    return { items: audit(toCss2(view)).findings };
+  } catch (e) {
+    return { items: [], error: e instanceof Error ? e.message : String(e) };
+  }
+}
+function findingLines({ items, error }) {
+  if (error)
+    return [`Note: findings unavailable (${error})`];
+  const rank = { fail: 0, warn: 1, pass: 2 };
+  const look = items.filter((f) => f.status !== "pass").sort((a, b) => rank[a.status] - rank[b.status]);
+  return [
+    `Findings: ${look.length} to look at`,
+    ...look.map((f) => `  ${f.status === "fail" ? "✕" : "!"} ${f.title}. ${f.detail}`),
+    `  ✓ ${items.length - look.length} ${items.length - look.length === 1 ? "check passes" : "checks pass"}`
+  ];
+}
+function summary(view, dir, link, file, findings = { items: [] }) {
   const lines = [`Spring scan of ${dir}`];
   if (!view.sources.length) {
     lines.push("No design tokens found: no CSS custom properties, tokens JSON, Tailwind theme or DESIGN.md.");
@@ -4722,6 +4764,7 @@ function summary(view, dir, link, file) {
     if (u.offSystemCount)
       lines.push(`Off-system color classes: ${u.offSystemCount} (${list(u.offSystem.map((h) => `${h.value} ${h.at}`), 5)})`);
   }
+  lines.push(...findingLines(findings));
   for (const n of view.notes ?? [])
     lines.push(`Note: ${n}`);
   if (link)
@@ -4789,7 +4832,7 @@ function build({ _: pos, opts: o }) {
   say(out.join(`
 `));
 }
-var BOOL = new Set(["json", "no-usage", "help"]);
+var BOOL = new Set(["json", "no-usage", "help", "open"]);
 function parse(argv) {
   const out = { _: [], flags: new Set, opts: {} };
   for (let i = 0;i < argv.length; i++) {
@@ -4815,12 +4858,24 @@ function fail(msg) {
   console.error(msg);
   process.exit(1);
 }
-var HELP = `spring scan [dir] [--json] [--out file] [--no-usage]
+function openInBrowser(url, onError = () => {}) {
+  const [cmd, ...args] = process.platform === "darwin" ? ["open", url] : process.platform === "win32" ? ["cmd", "/c", "start", '""', url] : ["xdg-open", url];
+  try {
+    const child = spawn(cmd, args, { detached: true, stdio: "ignore" });
+    child.on("error", (e) => onError(e.message));
+    child.unref();
+  } catch (e) {
+    onError(e instanceof Error ? e.message : String(e));
+  }
+}
+var openNote = (json) => (m) => (json ? console.error : say)(`Note: could not open the browser (${m})`);
+var HELP = `spring scan [dir] [--json] [--out file] [--no-usage] [--open]
+             --open opens the View link (or ${VIEW_URL} when it wrote a JSON file) in your browser
 spring build [spring.json] [--primary color] [--name n] [--font f] [--heading f] [--mono f]
              [--contrast aa|aaa|apca] [--styling tailwind|css] [--out dir] [--only a,b] [--print file]
 spring infer [dir] [--out spring.json]
 spring schema [input|view]`;
-function main(argv = process.argv.slice(2)) {
+function main(argv = process.argv.slice(2), deps = {}) {
   const [cmd, ...rest] = argv;
   const args = parse(rest);
   if (cmd === "scan") {
@@ -4830,12 +4885,25 @@ function main(argv = process.argv.slice(2)) {
     const view = extract(src, basename(dir));
     if (!args.flags.has("no-usage"))
       view.usage = usage(dir, all, view, new Set(src.map((s) => s.path)));
-    if (args.flags.has("json")) {
+    const findings = findingsOf(view);
+    const json = args.flags.has("json");
+    const open = (url) => {
+      if (!args.flags.has("open"))
+        return;
+      const note = openNote(json);
+      try {
+        (deps.open ?? ((u) => openInBrowser(u, note)))(url);
+      } catch (e) {
+        note(e instanceof Error ? e.message : String(e));
+      }
+    };
+    if (json) {
+      const text = JSON.stringify({ ...view, findings: findings.items }, null, 2) + `
+`;
       if (args.opts.out)
-        writeFileSync(args.opts.out, JSON.stringify(view, null, 2) + `
-`);
-      process.stdout.write(JSON.stringify(view, null, 2) + `
-`);
+        writeFileSync(args.opts.out, text);
+      process.stdout.write(text);
+      open(VIEW_URL);
       return;
     }
     const link = viewLink(view);
@@ -4846,7 +4914,8 @@ function main(argv = process.argv.slice(2)) {
       writeFileSync(file, JSON.stringify(view, null, 2) + `
 `);
     }
-    say(summary(view, dir, fits ? link : null, file));
+    say(summary(view, dir, fits ? link : null, file, findings));
+    open(fits ? link : VIEW_URL);
     return;
   }
   if (cmd === "infer") {
